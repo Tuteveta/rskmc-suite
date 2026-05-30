@@ -1,5 +1,5 @@
 #!/bin/bash
-# RSKMC Suite — EC2 Ubuntu 22.04 Setup Script
+# RSKMC Suite — EC2 Ubuntu 22.04/24.04/25.04 Setup Script
 # Run as: bash setup-ec2.sh
 
 set -e
@@ -12,14 +12,28 @@ echo "=========================================="
 echo "[1/10] Updating system..."
 sudo apt-get update -y && sudo apt-get upgrade -y
 
-# ── 2. Install PHP 8.2 ───────────────────────────────────────────────────────
-echo "[2/10] Installing PHP 8.2..."
-sudo apt-get install -y software-properties-common
-sudo add-apt-repository ppa:ondrej/php -y
-sudo apt-get update -y
-sudo apt-get install -y php8.2 php8.2-fpm php8.2-cli php8.2-mysql \
-    php8.2-mbstring php8.2-xml php8.2-curl php8.2-zip php8.2-gd \
-    php8.2-bcmath php8.2-intl php8.2-tokenizer php8.2-dom
+# ── 2. Install PHP (auto-detect version) ────────────────────────────────────
+echo "[2/10] Installing PHP..."
+UBUNTU_CODENAME=$(lsb_release -cs)
+SUPPORTED_CODENAMES="focal jammy noble"
+
+if echo "$SUPPORTED_CODENAMES" | grep -qw "$UBUNTU_CODENAME"; then
+    # Use ondrej PPA for Ubuntu 20.04/22.04/24.04
+    sudo apt-get install -y software-properties-common
+    sudo add-apt-repository ppa:ondrej/php -y
+    sudo apt-get update -y
+    PHP_VER="8.2"
+else
+    # Ubuntu 25.04+ — use default repos (PHP 8.3)
+    sudo apt-get update -y
+    PHP_VER="8.3"
+fi
+
+sudo apt-get install -y php${PHP_VER} php${PHP_VER}-fpm php${PHP_VER}-cli \
+    php${PHP_VER}-mysql php${PHP_VER}-mbstring php${PHP_VER}-xml \
+    php${PHP_VER}-curl php${PHP_VER}-zip php${PHP_VER}-gd \
+    php${PHP_VER}-bcmath php${PHP_VER}-intl php${PHP_VER}-tokenizer php${PHP_VER}-dom
+echo "    PHP ${PHP_VER} installed."
 
 # ── 3. Install Nginx ─────────────────────────────────────────────────────────
 echo "[3/10] Installing Nginx..."
@@ -142,7 +156,7 @@ server {
     error_page 404 /index.php;
 
     location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php${PHP_VER}-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
         fastcgi_hide_header X-Powered-By;
@@ -161,7 +175,7 @@ sudo systemctl enable nginx
 
 # ── 10. Start services ───────────────────────────────────────────────────────
 echo "[10/10] Starting services..."
-sudo systemctl restart php8.2-fpm
+sudo systemctl restart php${PHP_VER}-fpm
 sudo systemctl restart nginx
 
 PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
