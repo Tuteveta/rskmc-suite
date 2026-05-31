@@ -16,7 +16,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
         .split(' ').map((w: string) => w[0]).slice(0, 2).join('').toUpperCase();
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-transparent">
             <div className="w-full px-4 py-8">
 
                 {/* Page header */}

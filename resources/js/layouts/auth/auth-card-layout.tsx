@@ -20,15 +20,17 @@ export default function AuthCardLayout({
     }, []);
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 p-4 sm:p-6 md:p-10">
+        <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 md:p-10" style={{ background: 'linear-gradient(145deg, #f8f9ff 0%, #fdf8ff 35%, #f6fbff 70%, #f9fff8 100%)', backgroundAttachment: 'fixed' }}>
             <div className="w-full max-w-sm sm:max-w-md">
                 {/* Glass card */}
                 <div
                     className="rounded-2xl overflow-hidden"
                     style={{
-                        background: '#ffffff',
-                        border: '1px solid rgba(0,0,0,0.07)',
-                        boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+                        background: 'rgba(255,255,255,0.80)',
+                        backdropFilter: 'blur(20px) saturate(180%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                        border: '1px solid rgba(255,255,255,0.65)',
+                        boxShadow: '0 8px 40px rgba(99,102,241,0.10), 0 2px 12px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,1)',
                     }}
                 >
                     {/* Header */}
