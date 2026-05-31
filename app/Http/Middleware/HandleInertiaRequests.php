@@ -47,6 +47,9 @@ class HandleInertiaRequests extends Middleware
                     'role_label' => $request->user()->role_label,
                 ]) : null,
             ],
+            'flash' => [
+                'greeting' => $request->session()->get('greeting'),
+            ],
         ]);
     }
 }

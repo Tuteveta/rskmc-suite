@@ -33,6 +33,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = Auth::user();
+        $hour = now()->setTimezone('Pacific/Port_Moresby')->hour;
+        $timeGreeting = match (true) {
+            $hour < 12 => 'Good morning',
+            $hour < 17 => 'Good afternoon',
+            default    => 'Good evening',
+        };
+
+        $request->session()->flash('greeting', "{$timeGreeting}, {$user->name}! Welcome back to RSKMC Suite.");
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
