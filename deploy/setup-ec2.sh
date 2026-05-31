@@ -12,27 +12,13 @@ echo "=========================================="
 echo "[1/10] Updating system..."
 sudo apt-get update -y && sudo apt-get upgrade -y
 
-# ── 2. Install PHP (auto-detect version) ────────────────────────────────────
+# ── 2. Install PHP (version-agnostic) ───────────────────────────────────────
 echo "[2/10] Installing PHP..."
-UBUNTU_CODENAME=$(lsb_release -cs)
-SUPPORTED_CODENAMES="focal jammy noble"
-
-if echo "$SUPPORTED_CODENAMES" | grep -qw "$UBUNTU_CODENAME"; then
-    # Use ondrej PPA for Ubuntu 20.04/22.04/24.04
-    sudo apt-get install -y software-properties-common
-    sudo add-apt-repository ppa:ondrej/php -y
-    sudo apt-get update -y
-    PHP_VER="8.2"
-else
-    # Ubuntu 25.04+ — use default repos (PHP 8.3)
-    sudo apt-get update -y
-    PHP_VER="8.3"
-fi
-
-sudo apt-get install -y php${PHP_VER} php${PHP_VER}-fpm php${PHP_VER}-cli \
-    php${PHP_VER}-mysql php${PHP_VER}-mbstring php${PHP_VER}-xml \
-    php${PHP_VER}-curl php${PHP_VER}-zip php${PHP_VER}-gd \
-    php${PHP_VER}-bcmath php${PHP_VER}-intl php${PHP_VER}-tokenizer php${PHP_VER}-dom
+sudo apt-get install -y php php-fpm php-cli \
+    php-mysql php-mbstring php-xml \
+    php-curl php-zip php-gd \
+    php-bcmath php-intl php-tokenizer php-dom
+PHP_VER=$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')
 echo "    PHP ${PHP_VER} installed."
 
 # ── 3. Install Nginx ─────────────────────────────────────────────────────────
