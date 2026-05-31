@@ -21,7 +21,7 @@ export default function MaintenanceCreate({ asset, types }: { asset: Asset; type
                 <h1 className="text-2xl font-semibold mb-1">Add Maintenance Log</h1>
                 <p className="text-sm text-gray-500 mb-6">{asset.name}</p>
                 <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div><Label>Service Date *</Label><Input type="date" value={data.service_date} onChange={e => setData('service_date', e.target.value)} /><InputError message={errors.service_date} /></div>
                         <div><Label>Type *</Label>
                             <select className="w-full border rounded-md px-3 py-2 text-sm" value={data.type} onChange={e => setData('type', e.target.value)}>

@@ -19,7 +19,7 @@ export default function BaptismRecordCreate({ members, baptism_types }: { member
     return (
         <AppLayout breadcrumbs={[{ title: 'Baptism Records', href: '/baptism-records' }, { title: 'Add Record', href: '#' }]}>
             <Head title="Add Baptism Record" />
-            <div className="p-6 max-w-2xl">
+            <div className="p-4 sm:p-6 w-full max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Add Baptism Record</h1>
                 <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
                     <div>
@@ -29,7 +29,7 @@ export default function BaptismRecordCreate({ members, baptism_types }: { member
                             {members.map(m => <option key={m.id} value={m.id}>{m.last_name}, {m.first_name} ({m.member_number})</option>)}
                         </select>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label>First Name *</Label>
                             <Input value={data.first_name} onChange={e => setData('first_name', e.target.value)} />

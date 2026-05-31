@@ -26,10 +26,10 @@ export default function AssetEdit({ asset, categories }: { asset: Asset; categor
     return (
         <AppLayout breadcrumbs={[{ title: 'Assets', href: '/assets' }, { title: 'Edit Asset', href: '#' }]}>
             <Head title="Edit Asset" />
-            <div className="p-6 max-w-2xl">
+            <div className="p-4 sm:p-6 w-full max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Edit Asset</h1>
                 <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="col-span-2">
                             <Label>Asset Name *</Label>
                             <Input value={data.name} onChange={e => setData('name', e.target.value)} />

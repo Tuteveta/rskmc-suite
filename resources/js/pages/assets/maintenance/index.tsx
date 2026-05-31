@@ -20,7 +20,7 @@ export default function MaintenanceIndex({ asset, logs, types }: Props) {
     return (
         <AppLayout breadcrumbs={[{ title: 'Assets', href: '/assets' }, { title: asset.name, href: `/assets/${asset.id}/edit` }, { title: 'Maintenance', href: '#' }]}>
             <Head title={`Maintenance — ${asset.name}`} />
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between flex-wrap gap-3">
                     <div>
                         <Link href="/assets" className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-1"><ArrowLeft className="h-3.5 w-3.5" />Back to Assets</Link>

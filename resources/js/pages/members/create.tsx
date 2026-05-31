@@ -19,10 +19,10 @@ export default function MemberCreate() {
     return (
         <AppLayout breadcrumbs={[{ title: 'Members', href: '/members' }, { title: 'Add Member', href: '/members/create' }]}>
             <Head title="Add Member" />
-            <div className="p-6 max-w-2xl">
+            <div className="p-4 sm:p-6 w-full max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Add Member</h1>
                 <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label>First Name *</Label>
                             <Input value={data.first_name} onChange={e => setData('first_name', e.target.value)} />
@@ -34,7 +34,7 @@ export default function MemberCreate() {
                             <InputError message={errors.last_name} />
                         </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label>Gender *</Label>
                             <select className="w-full border rounded-md px-3 py-2 text-sm" value={data.gender} onChange={e => setData('gender', e.target.value)}>
@@ -47,7 +47,7 @@ export default function MemberCreate() {
                             <Input type="date" value={data.date_of_birth} onChange={e => setData('date_of_birth', e.target.value)} />
                         </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label>Phone</Label>
                             <Input value={data.phone} onChange={e => setData('phone', e.target.value)} />
@@ -61,7 +61,7 @@ export default function MemberCreate() {
                         <Label>Address</Label>
                         <textarea className="w-full border rounded-md px-3 py-2 text-sm" rows={2} value={data.address} onChange={e => setData('address', e.target.value)} />
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label>Join Date</Label>
                             <Input type="date" value={data.join_date} onChange={e => setData('join_date', e.target.value)} />

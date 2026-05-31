@@ -23,10 +23,10 @@ export default function MarriageRecordEdit({ record, members }: { record: Record
     return (
         <AppLayout breadcrumbs={[{ title: 'Marriage Records', href: '/marriage-records' }, { title: 'Edit', href: '#' }]}>
             <Head title="Edit Marriage Record" />
-            <div className="p-6 max-w-2xl">
+            <div className="p-4 sm:p-6 w-full max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Edit Marriage Record</h1>
                 <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div><Label>Husband First Name *</Label><Input value={data.husband_first_name} onChange={e => setData('husband_first_name', e.target.value)} /></div>
                         <div><Label>Husband Last Name *</Label><Input value={data.husband_last_name} onChange={e => setData('husband_last_name', e.target.value)} /></div>
                         <div><Label>Wife First Name *</Label><Input value={data.wife_first_name} onChange={e => setData('wife_first_name', e.target.value)} /></div>

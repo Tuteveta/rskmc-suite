@@ -27,7 +27,7 @@ export default function TithesIndex({ tithes, giving_types, totals }: Props) {
     return (
         <AppLayout breadcrumbs={[{ title: 'Tithes & Offerings', href: '/tithes' }]}>
             <Head title="Tithes & Offerings" />
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between flex-wrap gap-3">
                     <h1 className="text-2xl font-semibold">Tithes & Offerings</h1>
                     <div className="flex gap-2">

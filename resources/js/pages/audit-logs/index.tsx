@@ -14,7 +14,7 @@ export default function AuditLogsIndex({ logs }: Props) {
     return (
         <AppLayout breadcrumbs={[{ title: 'Audit Log', href: '/audit-logs' }]}>
             <Head title="Audit Log" />
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4">
                 <h1 className="text-2xl font-semibold">Audit Log</h1>
 
                 <div className="glass rounded-xl overflow-x-auto">

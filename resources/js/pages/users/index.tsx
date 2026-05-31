@@ -18,7 +18,7 @@ export default function UsersIndex({ users, roles }: Props) {
     return (
         <AppLayout breadcrumbs={[{ title: 'User Management', href: '/users' }]}>
             <Head title="User Management" />
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">User Management</h1>
                     <Link href={route('users.create')}>

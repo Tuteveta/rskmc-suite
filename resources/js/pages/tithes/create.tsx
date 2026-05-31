@@ -27,7 +27,7 @@ export default function TitheCreate({ members, giving_types }: { members: Member
                             {members.map(m => <option key={m.id} value={m.id}>{m.last_name}, {m.first_name} ({m.member_number})</option>)}
                         </select>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label>Giving Type *</Label>
                             <select className="w-full border rounded-md px-3 py-2 text-sm" value={data.giving_type} onChange={e => setData('giving_type', e.target.value)}>

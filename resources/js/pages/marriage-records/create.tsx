@@ -31,7 +31,7 @@ export default function MarriageRecordCreate({ members }: { members: Member[] })
     return (
         <AppLayout breadcrumbs={[{ title: 'Marriage Records', href: '/marriage-records' }, { title: 'Add Record', href: '#' }]}>
             <Head title="Add Marriage Record" />
-            <div className="p-6 max-w-2xl">
+            <div className="p-4 sm:p-6 w-full max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Add Marriage Record</h1>
                 <form onSubmit={submit} className="space-y-5 glass rounded-xl p-6">
                     <div className="grid grid-cols-2 gap-4 border-b pb-4">
@@ -48,7 +48,7 @@ export default function MarriageRecordCreate({ members }: { members: Member[] })
                         <div><Label>First Name *</Label><Input value={data.wife_first_name} onChange={e => setData('wife_first_name', e.target.value)} /><InputError message={errors.wife_first_name} /></div>
                         <div><Label>Last Name *</Label><Input value={data.wife_last_name} onChange={e => setData('wife_last_name', e.target.value)} /><InputError message={errors.wife_last_name} /></div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div><Label>Date of Marriage *</Label><Input type="date" value={data.date_of_marriage} onChange={e => setData('date_of_marriage', e.target.value)} /><InputError message={errors.date_of_marriage} /></div>
                         <div><Label>Place of Marriage</Label><Input value={data.place_of_marriage} onChange={e => setData('place_of_marriage', e.target.value)} /></div>
                         <div><Label>Officiant *</Label><Input value={data.officiant} onChange={e => setData('officiant', e.target.value)} /><InputError message={errors.officiant} /></div>

@@ -14,7 +14,7 @@ export default function MarriageRecordsIndex({ records }: Props) {
     return (
         <AppLayout breadcrumbs={[{ title: 'Marriage Records', href: '/marriage-records' }]}>
             <Head title="Marriage Records" />
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">Marriage Records</h1>
                     <Link href={route('marriage-records.create')}><Button><PlusCircle className="mr-2 h-4 w-4" />Add Record</Button></Link>

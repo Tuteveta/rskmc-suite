@@ -166,7 +166,7 @@ export default function Dashboard({ summary, variances, charts, member_analytics
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex flex-col gap-6 p-6">
+            <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6">
 
                 {/* Header */}
                 <div className="flex items-start justify-between flex-wrap gap-3">
@@ -332,7 +332,7 @@ export default function Dashboard({ summary, variances, charts, member_analytics
                     <ChartCard title="Member Insights">
                         <div className="space-y-5">
                             {/* Stats row */}
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {[
                                     { label: 'New This Month', value: member_analytics?.new_this_month ?? 0, icon: UserPlus, color: 'text-blue-600' },
                                     { label: 'New This Year',  value: member_analytics?.new_this_year ?? 0,  icon: UserPlus, color: 'text-indigo-600' },

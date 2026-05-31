@@ -21,7 +21,7 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
 
-            <div className="flex items-center gap-2 text-sm">
+            <div className="hidden sm:flex items-center gap-2 text-sm">
                 <span className="text-base">👋</span>
                 <span className="text-gray-500">{timeGreeting()},</span>
                 <span className="font-semibold text-gray-800">{firstName}!</span>
