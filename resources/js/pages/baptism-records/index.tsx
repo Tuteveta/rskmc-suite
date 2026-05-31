@@ -4,8 +4,11 @@ import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 import ExportFilterModal from '@/components/export-filter-modal';
 
+const TYPE_LABELS: Record<string, string> = { infant: 'Infant', immersion: 'Immersion' };
+const TYPE_COLORS: Record<string, string> = { infant: 'bg-blue-100 text-blue-700', immersion: 'bg-indigo-100 text-indigo-700' };
+
 interface Record {
-    id: number; first_name: string; last_name: string;
+    id: number; first_name: string; last_name: string; baptism_type: string;
     date_of_baptism: string; officiant: string; place_of_baptism: string | null;
     member: { first_name: string; last_name: string } | null;
 }
@@ -50,6 +53,7 @@ export default function BaptismRecordsIndex({ records }: Props) {
                         <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr>
                                 <th className="px-4 py-3 text-left">Name</th>
+                                <th className="px-4 py-3 text-left">Type</th>
                                 <th className="px-4 py-3 text-left">Date of Baptism</th>
                                 <th className="px-4 py-3 text-left">Officiant</th>
                                 <th className="px-4 py-3 text-left">Place</th>
@@ -61,6 +65,11 @@ export default function BaptismRecordsIndex({ records }: Props) {
                             {records.data.map((r) => (
                                 <tr key={r.id} className="hover:bg-gray-50">
                                     <td className="px-4 py-3 font-medium">{r.last_name}, {r.first_name}</td>
+                                    <td className="px-4 py-3">
+                                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${TYPE_COLORS[r.baptism_type] ?? 'bg-gray-100 text-gray-600'}`}>
+                                            {TYPE_LABELS[r.baptism_type] ?? r.baptism_type}
+                                        </span>
+                                    </td>
                                     <td className="px-4 py-3">{r.date_of_baptism}</td>
                                     <td className="px-4 py-3">{r.officiant}</td>
                                     <td className="px-4 py-3">{r.place_of_baptism ?? '—'}</td>

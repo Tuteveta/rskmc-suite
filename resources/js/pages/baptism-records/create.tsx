@@ -7,10 +7,10 @@ import InputError from '@/components/input-error';
 
 interface Member { id: number; first_name: string; last_name: string; member_number: string; }
 
-export default function BaptismRecordCreate({ members }: { members: Member[] }) {
+export default function BaptismRecordCreate({ members, baptism_types }: { members: Member[]; baptism_types: Record<string, string> }) {
     const { data, setData, post, processing, errors } = useForm({
         member_id: '', first_name: '', last_name: '', date_of_birth: '',
-        date_of_baptism: '', place_of_baptism: '', officiant: '',
+        date_of_baptism: '', baptism_type: 'infant', place_of_baptism: '', officiant: '',
         father_name: '', mother_name: '', witnesses: '', notes: '',
     });
 
@@ -48,6 +48,18 @@ export default function BaptismRecordCreate({ members }: { members: Member[] }) 
                             <Label>Date of Baptism *</Label>
                             <Input type="date" value={data.date_of_baptism} onChange={e => setData('date_of_baptism', e.target.value)} />
                             <InputError message={errors.date_of_baptism} />
+                        </div>
+                        <div className="col-span-2">
+                            <Label>Baptism Type *</Label>
+                            <div className="flex gap-3 mt-1">
+                                {Object.entries(baptism_types).map(([value, label]) => (
+                                    <label key={value} className={`flex-1 flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 cursor-pointer text-sm font-medium transition-colors ${data.baptism_type === value ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 text-gray-600 hover:border-gray-400'}`}>
+                                        <input type="radio" name="baptism_type" value={value} checked={data.baptism_type === value} onChange={() => setData('baptism_type', value)} className="sr-only" />
+                                        {label}
+                                    </label>
+                                ))}
+                            </div>
+                            <InputError message={errors.baptism_type} />
                         </div>
                         <div>
                             <Label>Place of Baptism</Label>

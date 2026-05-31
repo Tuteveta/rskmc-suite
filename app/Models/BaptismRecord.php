@@ -10,9 +10,17 @@ class BaptismRecord extends Model
     use Auditable;
     protected $fillable = [
         'member_id', 'first_name', 'last_name', 'date_of_birth',
-        'date_of_baptism', 'place_of_baptism', 'officiant',
+        'date_of_baptism', 'baptism_type', 'place_of_baptism', 'officiant',
         'father_name', 'mother_name', 'witnesses', 'notes',
     ];
+
+    public static function baptismTypes(): array
+    {
+        return [
+            'infant'    => 'Infant Baptism',
+            'immersion' => 'Immersion',
+        ];
+    }
 
     protected function casts(): array
     {

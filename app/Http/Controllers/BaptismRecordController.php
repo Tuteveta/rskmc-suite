@@ -19,7 +19,8 @@ class BaptismRecordController extends Controller
     public function create()
     {
         return Inertia::render('baptism-records/create', [
-            'members' => Member::orderBy('last_name')->get(['id', 'first_name', 'last_name', 'member_number']),
+            'members'       => Member::orderBy('last_name')->get(['id', 'first_name', 'last_name', 'member_number']),
+            'baptism_types' => \App\Models\BaptismRecord::baptismTypes(),
         ]);
     }
 
@@ -31,6 +32,7 @@ class BaptismRecordController extends Controller
             'last_name'        => 'required|string|max:100',
             'date_of_birth'    => 'nullable|date',
             'date_of_baptism'  => 'required|date',
+            'baptism_type'     => 'required|in:infant,immersion',
             'place_of_baptism' => 'nullable|string|max:150',
             'officiant'        => 'required|string|max:150',
             'father_name'      => 'nullable|string|max:150',
@@ -54,8 +56,9 @@ class BaptismRecordController extends Controller
     public function edit(BaptismRecord $baptismRecord)
     {
         return Inertia::render('baptism-records/edit', [
-            'record'  => $baptismRecord,
-            'members' => Member::orderBy('last_name')->get(['id', 'first_name', 'last_name', 'member_number']),
+            'record'        => $baptismRecord,
+            'members'       => Member::orderBy('last_name')->get(['id', 'first_name', 'last_name', 'member_number']),
+            'baptism_types' => \App\Models\BaptismRecord::baptismTypes(),
         ]);
     }
 
@@ -67,6 +70,7 @@ class BaptismRecordController extends Controller
             'last_name'        => 'required|string|max:100',
             'date_of_birth'    => 'nullable|date',
             'date_of_baptism'  => 'required|date',
+            'baptism_type'     => 'required|in:infant,immersion',
             'place_of_baptism' => 'nullable|string|max:150',
             'officiant'        => 'required|string|max:150',
             'father_name'      => 'nullable|string|max:150',

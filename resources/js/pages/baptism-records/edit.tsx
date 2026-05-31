@@ -7,17 +7,18 @@ import InputError from '@/components/input-error';
 
 interface BaptismRecord {
     id: number; member_id: number | null; first_name: string; last_name: string;
-    date_of_birth: string | null; date_of_baptism: string; place_of_baptism: string | null;
-    officiant: string; father_name: string | null; mother_name: string | null;
-    witnesses: string | null; notes: string | null;
+    date_of_birth: string | null; date_of_baptism: string; baptism_type: string;
+    place_of_baptism: string | null; officiant: string; father_name: string | null;
+    mother_name: string | null; witnesses: string | null; notes: string | null;
 }
 interface Member { id: number; first_name: string; last_name: string; member_number: string; }
 
-export default function BaptismRecordEdit({ record, members }: { record: BaptismRecord; members: Member[] }) {
+export default function BaptismRecordEdit({ record, members, baptism_types }: { record: BaptismRecord; members: Member[]; baptism_types: Record<string, string> }) {
     const { data, setData, put, processing, errors } = useForm({
         member_id: record.member_id ? String(record.member_id) : '',
         first_name: record.first_name, last_name: record.last_name,
         date_of_birth: record.date_of_birth ?? '', date_of_baptism: record.date_of_baptism,
+        baptism_type: record.baptism_type ?? 'infant',
         place_of_baptism: record.place_of_baptism ?? '', officiant: record.officiant,
         father_name: record.father_name ?? '', mother_name: record.mother_name ?? '',
         witnesses: record.witnesses ?? '', notes: record.notes ?? '',
@@ -57,6 +58,18 @@ export default function BaptismRecordEdit({ record, members }: { record: Baptism
                             <Label>Date of Baptism *</Label>
                             <Input type="date" value={data.date_of_baptism} onChange={e => setData('date_of_baptism', e.target.value)} />
                             <InputError message={errors.date_of_baptism} />
+                        </div>
+                        <div className="col-span-2">
+                            <Label>Baptism Type *</Label>
+                            <div className="flex gap-3 mt-1">
+                                {Object.entries(baptism_types).map(([value, label]) => (
+                                    <label key={value} className={`flex-1 flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 cursor-pointer text-sm font-medium transition-colors ${data.baptism_type === value ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 text-gray-600 hover:border-gray-400'}`}>
+                                        <input type="radio" name="baptism_type" value={value} checked={data.baptism_type === value} onChange={() => setData('baptism_type', value)} className="sr-only" />
+                                        {label}
+                                    </label>
+                                ))}
+                            </div>
+                            <InputError message={errors.baptism_type} />
                         </div>
                         <div>
                             <Label>Place of Baptism</Label>
