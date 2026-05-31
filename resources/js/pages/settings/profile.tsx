@@ -36,7 +36,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
             <SettingsLayout>
 
                 {/* Profile card */}
-                <div className="rounded-xl border bg-white shadow-sm">
+                <div className="glass rounded-xl">
                     <div className="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100">
                             <User className="h-4 w-4 text-gray-600" />
@@ -131,7 +131,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                 </div>
 
                 {/* Danger zone */}
-                <div className="rounded-xl border border-red-200 bg-white shadow-sm">
+                <div className="glass rounded-xl border-red-200">
                     <div className="px-6 py-5 border-b border-red-100 flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-50">
                             <ShieldAlert className="h-4 w-4 text-red-500" />

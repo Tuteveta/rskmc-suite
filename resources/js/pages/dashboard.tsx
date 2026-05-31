@@ -62,7 +62,7 @@ function VCard({ label, value, variance, icon: Icon, color, isCurrency = false, 
         : n.toLocaleString();
 
     return (
-        <div className="rounded-xl border bg-white p-5 flex flex-col gap-3">
+        <div className="glass rounded-xl p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
                 <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${color}`}>
                     <Icon className="h-5 w-5 text-white" />
@@ -88,7 +88,7 @@ function VCard({ label, value, variance, icon: Icon, color, isCurrency = false, 
 // ── Section heading ──────────────────────────────────────────────────────────
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
     return (
-        <div className="rounded-xl border bg-white p-5">
+        <div className="glass rounded-xl p-5">
             <h3 className="text-sm font-semibold text-gray-700 mb-4">{title}</h3>
             {children}
         </div>
@@ -99,7 +99,7 @@ function ChartCard({ title, children }: { title: string; children: React.ReactNo
 function CurrencyTooltip({ active, payload, label }: any) {
     if (!active || !payload?.length) return null;
     return (
-        <div className="rounded-lg border bg-white p-3 shadow-md text-xs">
+        <div className="glass rounded-lg p-3 text-xs">
             <p className="font-semibold mb-1">{label}</p>
             {payload.map((p: any) => (
                 <p key={p.dataKey} style={{ color: p.color }}>
@@ -133,7 +133,7 @@ function InsightCard({ icon: Icon, iconBg, label, value, sub }: {
     icon: React.ElementType; iconBg: string; label: string; value: string | number; sub?: string;
 }) {
     return (
-        <div className="rounded-xl border bg-white p-4 flex items-start gap-3">
+        <div className="glass rounded-xl p-4 flex items-start gap-3">
             <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${iconBg}`}>
                 <Icon className="h-4 w-4 text-white" />
             </div>
@@ -175,7 +175,7 @@ export default function Dashboard({ summary, variances, charts, member_analytics
                         <p className="text-sm text-gray-500 mt-0.5">{role} · RSKMC Suite</p>
                     </div>
                     {/* Period toggle */}
-                    <div className="flex rounded-lg border bg-white overflow-hidden text-sm">
+                    <div className="flex glass rounded-lg overflow-hidden text-sm">
                         {(['week', 'month', 'year'] as Period[]).map(p => (
                             <button
                                 key={p}
@@ -209,7 +209,7 @@ export default function Dashboard({ summary, variances, charts, member_analytics
                         { label: 'Giving This Month', value: `PGK ${Number(summary.tithes_month).toLocaleString('en-PG', { minimumFractionDigits: 2 })}`, sub: 'tithes & offerings', raw: true },
                         { label: 'Giving This Year',  value: `PGK ${Number(summary.tithes_year).toLocaleString('en-PG', { minimumFractionDigits: 2 })}`, sub: 'cumulative', raw: true },
                     ].map(s => (
-                        <div key={s.label} className="rounded-xl border bg-white p-4">
+                        <div key={s.label} className="glass rounded-xl p-4">
                             <p className="text-xs text-gray-500">{s.label}</p>
                             <p className="text-xl font-bold text-gray-900 mt-0.5">{s.value}</p>
                             <p className="text-xs text-gray-400">{s.sub}</p>

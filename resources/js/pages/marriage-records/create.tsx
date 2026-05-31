@@ -33,7 +33,7 @@ export default function MarriageRecordCreate({ members }: { members: Member[] })
             <Head title="Add Marriage Record" />
             <div className="p-6 max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Add Marriage Record</h1>
-                <form onSubmit={submit} className="space-y-5 bg-white rounded-lg border p-6">
+                <form onSubmit={submit} className="space-y-5 glass rounded-xl p-6">
                     <div className="grid grid-cols-2 gap-4 border-b pb-4">
                         <h3 className="col-span-2 font-medium text-gray-700">Husband</h3>
                         <MemberSelect label="Husband" field="husband_member_id" />

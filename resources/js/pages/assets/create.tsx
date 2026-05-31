@@ -19,7 +19,7 @@ export default function AssetCreate({ categories }: { categories: Record<string,
             <Head title="Add Asset" />
             <div className="p-6 max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Add Asset</h1>
-                <form onSubmit={submit} className="space-y-4 bg-white rounded-lg border p-6">
+                <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="col-span-2">
                             <Label>Asset Name *</Label>

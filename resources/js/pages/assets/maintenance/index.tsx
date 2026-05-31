@@ -28,7 +28,7 @@ export default function MaintenanceIndex({ asset, logs, types }: Props) {
                     </div>
                     <Link href={route('assets.maintenance.create', asset.id)}><Button><PlusCircle className="mr-2 h-4 w-4" />Add Log</Button></Link>
                 </div>
-                <div className="rounded-lg border bg-white overflow-x-auto shadow-sm">
+                <div className="glass rounded-xl overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr><th className="px-4 py-3 text-left">Date</th><th className="px-4 py-3 text-left">Type</th><th className="px-4 py-3 text-left">Description</th><th className="px-4 py-3 text-left">Performed By</th><th className="px-4 py-3 text-right">Cost (PGK)</th><th className="px-4 py-3 text-left">Next Due</th><th className="px-4 py-3"></th></tr>

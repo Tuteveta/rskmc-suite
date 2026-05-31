@@ -20,7 +20,7 @@ export default function MaintenanceEdit({ asset, log, types }: { asset: Asset; l
             <Head title="Edit Maintenance Log" />
             <div className="p-6 max-w-lg">
                 <h1 className="text-2xl font-semibold mb-6">Edit Maintenance Log</h1>
-                <form onSubmit={submit} className="space-y-4 bg-white rounded-lg border p-6">
+                <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
                     <div className="grid grid-cols-2 gap-4">
                         <div><Label>Service Date *</Label><Input type="date" value={data.service_date} onChange={e => setData('service_date', e.target.value)} /></div>
                         <div><Label>Type *</Label><select className="w-full border rounded-md px-3 py-2 text-sm" value={data.type} onChange={e => setData('type', e.target.value)}>{Object.entries(types).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></div>

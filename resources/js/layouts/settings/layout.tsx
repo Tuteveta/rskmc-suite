@@ -41,7 +41,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
                         </div>
 
                         {/* Nav */}
-                        <nav className="rounded-xl border bg-white shadow-sm overflow-hidden">
+                        <nav className="glass rounded-xl overflow-hidden">
                             {navItems.map((item, i) => {
                                 const active = currentPath === item.url;
                                 const Icon = item.icon;

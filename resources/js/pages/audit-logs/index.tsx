@@ -17,7 +17,7 @@ export default function AuditLogsIndex({ logs }: Props) {
             <div className="p-6 space-y-4">
                 <h1 className="text-2xl font-semibold">Audit Log</h1>
 
-                <div className="rounded-lg border bg-white overflow-x-auto shadow-sm">
+                <div className="glass rounded-xl overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr>

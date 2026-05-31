@@ -19,7 +19,7 @@ export default function FuneralRecordsIndex({ records }: Props) {
                     <h1 className="text-2xl font-semibold">Funeral / Burial Records</h1>
                     <Link href={route('funeral-records.create')}><Button><PlusCircle className="mr-2 h-4 w-4" />Add Record</Button></Link>
                 </div>
-                <div className="rounded-lg border bg-white overflow-x-auto shadow-sm">
+                <div className="glass rounded-xl overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr><th className="px-4 py-3 text-left">Name</th><th className="px-4 py-3 text-left">Date of Death</th><th className="px-4 py-3 text-left">Funeral Date</th><th className="px-4 py-3 text-left">Place of Burial</th><th className="px-4 py-3 text-left">Officiant</th><th className="px-4 py-3 text-left">Member</th><th className="px-4 py-3"></th></tr>

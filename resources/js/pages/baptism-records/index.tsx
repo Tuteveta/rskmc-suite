@@ -48,7 +48,7 @@ export default function BaptismRecordsIndex({ records }: Props) {
                     </div>
                 </div>
 
-                <div className="rounded-lg border bg-white overflow-x-auto shadow-sm">
+                <div className="glass rounded-xl overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
                             <tr>

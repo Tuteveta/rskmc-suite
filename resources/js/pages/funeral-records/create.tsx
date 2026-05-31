@@ -20,7 +20,7 @@ export default function FuneralRecordCreate({ members }: { members: Member[] }) 
             <Head title="Add Funeral Record" />
             <div className="p-6 max-w-2xl">
                 <h1 className="text-2xl font-semibold mb-6">Add Funeral / Burial Record</h1>
-                <form onSubmit={submit} className="space-y-4 bg-white rounded-lg border p-6">
+                <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
                     <div>
                         <Label>Link to Member (optional)</Label>
                         <select className="w-full border rounded-md px-3 py-2 text-sm" value={data.member_id} onChange={e => setData('member_id', e.target.value)}>

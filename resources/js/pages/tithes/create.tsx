@@ -19,7 +19,7 @@ export default function TitheCreate({ members, giving_types }: { members: Member
             <Head title="Record Giving" />
             <div className="p-6 max-w-lg">
                 <h1 className="text-2xl font-semibold mb-6">Record Giving</h1>
-                <form onSubmit={submit} className="space-y-4 bg-white rounded-lg border p-6">
+                <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
                     <div>
                         <Label>Member (optional)</Label>
                         <select className="w-full border rounded-md px-3 py-2 text-sm" value={data.member_id} onChange={e => setData('member_id', e.target.value)}>

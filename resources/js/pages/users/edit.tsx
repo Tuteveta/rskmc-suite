@@ -20,7 +20,7 @@ export default function UserEdit({ user, roles }: { user: User; roles: Record<st
             <Head title="Edit User" />
             <div className="p-6 max-w-lg">
                 <h1 className="text-2xl font-semibold mb-6">Edit User</h1>
-                <form onSubmit={submit} className="space-y-4 bg-white rounded-lg border p-6">
+                <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
                     <div>
                         <Label>Full Name *</Label>
                         <Input value={data.name} onChange={e => setData('name', e.target.value)} />
