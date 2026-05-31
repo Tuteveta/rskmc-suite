@@ -61,7 +61,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // ── Admin only ────────────────────────────────────────────────────────
-    Route::middleware(['role:admin'])->group(function () {
+    Route::middleware(['role:admin,administrator'])->group(function () {
         Route::resource('users', UserController::class)->except('show');
         Route::get('audit-logs',              [AuditLogController::class, 'index'])->name('audit-logs.index');
         Route::get('backup',                  [BackupController::class, 'index'])->name('backup.index');
