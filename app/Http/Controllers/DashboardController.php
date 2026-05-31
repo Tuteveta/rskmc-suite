@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asset;
 use App\Models\BaptismRecord;
 use App\Models\FuneralRecord;
 use App\Models\MarriageRecord;
@@ -18,9 +19,12 @@ class DashboardController extends Controller
         $now = Carbon::now();
 
         return Inertia::render('dashboard', [
-            'summary'    => $this->summary($now),
-            'variances'  => $this->variances($now),
-            'charts'     => $this->charts($now),
+            'summary'             => $this->summary($now),
+            'variances'           => $this->variances($now),
+            'charts'              => $this->charts($now),
+            'member_analytics'    => $this->memberAnalyticsData($now),
+            'financial_analytics' => $this->financialAnalyticsData($now),
+            'asset_monitoring'    => $this->assetMonitoringData(),
         ]);
     }
 
@@ -239,6 +243,119 @@ class DashboardController extends Controller
             ->get()
             ->map(fn ($r) => ['label' => ucfirst($r->status), 'value' => (int) $r->count])
             ->toArray();
+    }
+
+    private function memberAnalyticsData(Carbon $now): array
+    {
+        $total  = Member::count();
+        $active = Member::where('status', 'active')->count();
+        $male   = Member::where('gender', 'male')->count();
+        $female = Member::where('gender', 'female')->count();
+
+        $avgTenure = Member::whereNotNull('join_date')->get()
+            ->avg(fn ($m) => $m->join_date->diffInYears($now));
+
+        $newThisMonth = Member::whereYear('join_date', $now->year)
+            ->whereMonth('join_date', $now->month)->count();
+
+        $newThisYear = Member::whereYear('join_date', $now->year)->count();
+
+        return [
+            'retention_rate'   => $total > 0 ? round(($active / $total) * 100, 1) : 0,
+            'avg_tenure_years' => round($avgTenure ?? 0, 1),
+            'new_this_month'   => $newThisMonth,
+            'new_this_year'    => $newThisYear,
+            'gender_split'     => [
+                ['label' => 'Male',   'value' => $male,   'color' => '#3b82f6'],
+                ['label' => 'Female', 'value' => $female, 'color' => '#ec4899'],
+            ],
+        ];
+    }
+
+    private function financialAnalyticsData(Carbon $now): array
+    {
+        $topGivers = Tithe::whereYear('giving_date', $now->year)
+            ->whereNotNull('member_id')
+            ->select('member_id', DB::raw('SUM(amount) as total'))
+            ->groupBy('member_id')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->with('member:id,first_name,last_name')
+            ->get()
+            ->map(fn ($r) => [
+                'name'  => $r->member ? "{$r->member->first_name} {$r->member->last_name}" : 'Anonymous',
+                'total' => (float) $r->total,
+            ])
+            ->toArray();
+
+        $uniqueGiversMonth = Tithe::whereMonth('giving_date', $now->month)
+            ->whereYear('giving_date', $now->year)
+            ->whereNotNull('member_id')
+            ->distinct('member_id')->count('member_id');
+
+        $uniqueGiversYear = Tithe::whereYear('giving_date', $now->year)
+            ->whereNotNull('member_id')
+            ->distinct('member_id')->count('member_id');
+
+        $yearTotal   = (float) Tithe::whereYear('giving_date', $now->year)->sum('amount');
+        $avgPerGiver = $uniqueGiversYear > 0 ? round($yearTotal / $uniqueGiversYear, 2) : 0;
+
+        $monthlyAvg = collect(range(1, 12))->map(fn ($m) =>
+            (float) Tithe::whereYear('giving_date', $now->year)->whereMonth('giving_date', $m)->sum('amount')
+        )->filter()->avg() ?? 0;
+
+        return [
+            'top_givers'            => $topGivers,
+            'unique_givers_month'   => $uniqueGiversMonth,
+            'unique_givers_year'    => $uniqueGiversYear,
+            'avg_per_giver_year'    => $avgPerGiver,
+            'monthly_avg_giving'    => round($monthlyAvg, 2),
+        ];
+    }
+
+    private function assetMonitoringData(): array
+    {
+        $conditionColors = [
+            'excellent' => '#10b981', 'good' => '#3b82f6',
+            'fair' => '#f59e0b', 'poor' => '#ef4444',
+        ];
+        $conditionLabels = [
+            'excellent' => 'Excellent', 'good' => 'Good',
+            'fair' => 'Fair', 'poor' => 'Poor',
+        ];
+
+        $byCondition = Asset::select('condition', DB::raw('count(*) as count'), DB::raw('SUM(acquisition_cost) as value'))
+            ->groupBy('condition')->get()
+            ->map(fn ($r) => [
+                'label' => $conditionLabels[$r->condition] ?? ucfirst($r->condition),
+                'count' => (int) $r->count,
+                'value' => (float) $r->value,
+                'color' => $conditionColors[$r->condition] ?? '#94a3b8',
+            ])->toArray();
+
+        $byCategory = Asset::select('category', DB::raw('count(*) as count'), DB::raw('SUM(acquisition_cost) as value'))
+            ->groupBy('category')->orderByDesc('value')->get()
+            ->map(fn ($r) => [
+                'label' => Asset::categories()[$r->category] ?? ucfirst($r->category),
+                'count' => (int) $r->count,
+                'value' => (float) $r->value,
+            ])->toArray();
+
+        $maintenance = Asset::where('status', 'maintenance')
+            ->select('id', 'name', 'category', 'condition')->get()
+            ->map(fn ($a) => [
+                'name'      => $a->name,
+                'category'  => Asset::categories()[$a->category] ?? $a->category,
+                'condition' => $a->condition,
+            ])->toArray();
+
+        return [
+            'by_condition'   => $byCondition,
+            'by_category'    => $byCategory,
+            'maintenance'    => $maintenance,
+            'total_value'    => (float) Asset::sum('acquisition_cost'),
+            'total_count'    => Asset::count(),
+        ];
     }
 
     private function givingRaceChart(Carbon $now): array
