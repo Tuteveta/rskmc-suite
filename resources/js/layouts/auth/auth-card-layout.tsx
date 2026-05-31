@@ -1,4 +1,3 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEffect } from 'react';
 
 export default function AuthCardLayout({
@@ -21,28 +20,54 @@ export default function AuthCardLayout({
     }, []);
 
     return (
-        <div className="flex min-h-svh flex-col items-center justify-center bg-white p-6 md:p-10">
-            <div className="w-full max-w-md">
-                <Card className="rounded-2xl border-2 border-gray-200 shadow-none">
-                    <CardHeader className="px-10 pt-10 pb-0 text-center flex flex-col items-center gap-4">
+        <div
+            className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 md:p-10"
+            style={{
+                background: 'linear-gradient(135deg, #eef2ff 0%, #f5f0ff 30%, #eff6ff 65%, #f0fdf4 100%)',
+                backgroundAttachment: 'fixed',
+            }}
+        >
+            <div className="w-full max-w-sm sm:max-w-md">
+                {/* Glass card */}
+                <div
+                    className="rounded-2xl overflow-hidden"
+                    style={{
+                        background: 'rgba(255,255,255,0.82)',
+                        backdropFilter: 'blur(20px)',
+                        WebkitBackdropFilter: 'blur(20px)',
+                        border: '1px solid rgba(255,255,255,0.6)',
+                        boxShadow: '0 8px 40px rgba(99,102,241,0.10), 0 2px 12px rgba(0,0,0,0.06)',
+                    }}
+                >
+                    {/* Header */}
+                    <div className="flex flex-col items-center gap-3 px-6 pt-8 pb-0 text-center sm:px-10 sm:pt-10">
                         <img
                             src="/logo.jpg"
                             alt="Rev Sione Kami Memorial Church"
-                            className="h-24 w-24 rounded-full object-cover"
+                            className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover shadow-md ring-2 ring-white"
                         />
                         <div>
-                            <h1 className="text-lg font-bold tracking-tight text-gray-900">
+                            <h1 className="text-base sm:text-lg font-bold tracking-tight text-gray-900">
                                 Rev Sione Kami Memorial Church
                             </h1>
-                            <p className="text-xs text-gray-400 mt-0.5">RSKMC Suite</p>
+                            <p className="text-xs text-indigo-400 mt-0.5 font-medium tracking-wide">RSKMC Suite</p>
                         </div>
-                        <div className="w-full border-t border-gray-200 pt-4">
-                            <CardTitle className="text-xl text-gray-900">{title}</CardTitle>
-                            <CardDescription className="text-gray-500 mt-1">{description}</CardDescription>
+                        <div className="w-full border-t border-gray-100 pt-4">
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{title}</p>
+                            <p className="text-xs sm:text-sm text-gray-400 mt-1">{description}</p>
                         </div>
-                    </CardHeader>
-                    <CardContent className="px-10 py-8">{children}</CardContent>
-                </Card>
+                    </div>
+
+                    {/* Form content */}
+                    <div className="px-6 py-6 sm:px-10 sm:py-8">
+                        {children}
+                    </div>
+                </div>
+
+                {/* Footer */}
+                <p className="mt-6 text-center text-xs text-gray-400">
+                    © {new Date().getFullYear()} Rev Sione Kami Memorial Church · Port Moresby, PNG
+                </p>
             </div>
         </div>
     );
