@@ -111,11 +111,15 @@ class DashboardController extends Controller
     private function charts(Carbon $now): array
     {
         return [
-            'member_growth'  => $this->memberGrowthChart($now),
-            'giving_monthly' => $this->givingMonthlyChart($now),
-            'giving_weekly'  => $this->givingWeeklyChart($now),
-            'giving_by_type' => $this->givingByTypeChart($now),
-            'records_monthly'=> $this->recordsMonthlyChart($now),
+            'member_growth'   => $this->memberGrowthChart($now),
+            'giving_monthly'  => $this->givingMonthlyChart($now),
+            'giving_weekly'   => $this->givingWeeklyChart($now),
+            'giving_by_type'  => $this->givingByTypeChart($now),
+            'records_monthly' => $this->recordsMonthlyChart($now),
+            'age_pyramid'     => $this->agePyramidChart($now),
+            'giving_heatmap'  => $this->givingHeatmapChart($now),
+            'member_status'   => $this->memberStatusChart(),
+            'giving_race'     => $this->givingRaceChart($now),
         ];
     }
 
@@ -188,6 +192,68 @@ class DashboardController extends Controller
                 'marriages' => MarriageRecord::whereYear('date_of_marriage', $month->year)->whereMonth('date_of_marriage', $month->month)->count(),
                 'funerals'  => FuneralRecord::whereYear('date_of_death', $month->year)->whereMonth('date_of_death', $month->month)->count(),
             ];
+        }
+        return $data;
+    }
+
+    private function agePyramidChart(Carbon $now): array
+    {
+        $groups = [
+            ['label' => '0–9',   'min' => 0,  'max' => 9],
+            ['label' => '10–19', 'min' => 10, 'max' => 19],
+            ['label' => '20–29', 'min' => 20, 'max' => 29],
+            ['label' => '30–39', 'min' => 30, 'max' => 39],
+            ['label' => '40–49', 'min' => 40, 'max' => 49],
+            ['label' => '50–59', 'min' => 50, 'max' => 59],
+            ['label' => '60–69', 'min' => 60, 'max' => 69],
+            ['label' => '70+',   'min' => 70, 'max' => 120],
+        ];
+
+        return array_map(function ($g) use ($now) {
+            $maxDob = $now->copy()->subYears($g['min']);
+            $minDob = $now->copy()->subYears($g['max'] + 1)->addDay();
+            $q = fn ($gender) => Member::where('gender', $gender)
+                ->whereNotNull('date_of_birth')
+                ->whereBetween('date_of_birth', [$minDob, $maxDob])
+                ->count();
+            return ['age_group' => $g['label'], 'male' => $q('male'), 'female' => $q('female')];
+        }, $groups);
+    }
+
+    private function givingHeatmapChart(Carbon $now): array
+    {
+        $start = $now->copy()->subYear()->startOfDay();
+        return Tithe::where('giving_date', '>=', $start)
+            ->select(DB::raw('DATE(giving_date) as date'), DB::raw('SUM(amount) as amount'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->map(fn ($r) => ['date' => $r->date, 'amount' => (float) $r->amount])
+            ->toArray();
+    }
+
+    private function memberStatusChart(): array
+    {
+        return Member::select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->get()
+            ->map(fn ($r) => ['label' => ucfirst($r->status), 'value' => (int) $r->count])
+            ->toArray();
+    }
+
+    private function givingRaceChart(Carbon $now): array
+    {
+        $types = Tithe::givingTypes();
+        $data  = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $month = $now->copy()->subMonths($i);
+            $frame = ['month' => $month->format('M Y')];
+            foreach ($types as $key => $label) {
+                $frame[$label] = (float) Tithe::where('giving_type', $key)
+                    ->where('giving_date', '<=', $month->copy()->endOfMonth())
+                    ->sum('amount');
+            }
+            $data[] = $frame;
         }
         return $data;
     }

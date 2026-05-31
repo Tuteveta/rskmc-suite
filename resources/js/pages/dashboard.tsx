@@ -11,6 +11,10 @@ import {
     Users, Package, Droplets, Heart, Cross,
     DollarSign, TrendingUp, TrendingDown, Minus,
 } from 'lucide-react';
+import AgePyramid      from '@/components/charts/AgePyramid';
+import CalendarHeatmap from '@/components/charts/CalendarHeatmap';
+import DonutChart      from '@/components/charts/DonutChart';
+import BarRace         from '@/components/charts/BarRace';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Dashboard', href: '/dashboard' }];
 
@@ -208,6 +212,26 @@ export default function Dashboard({ summary, variances, charts }: {
                                 <Bar dataKey="prev_year" name="Last Year"  fill="#cbd5e1" radius={[3, 3, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
+                    </ChartCard>
+                </div>
+
+                {/* D3 Charts — row 1: Age Pyramid + Giving Heatmap */}
+                <div className="grid gap-4 lg:grid-cols-2">
+                    <ChartCard title="Member Age Distribution">
+                        <AgePyramid data={charts.age_pyramid ?? []} />
+                    </ChartCard>
+                    <ChartCard title="Giving Activity — Last 12 Months">
+                        <CalendarHeatmap data={charts.giving_heatmap ?? []} />
+                    </ChartCard>
+                </div>
+
+                {/* D3 Charts — row 2: Member Status Donut + Giving Race */}
+                <div className="grid gap-4 lg:grid-cols-2">
+                    <ChartCard title="Member Status Breakdown">
+                        <DonutChart data={charts.member_status ?? []} centerLabel="Members" />
+                    </ChartCard>
+                    <ChartCard title="Cumulative Giving by Type — 12-Month Race">
+                        <BarRace data={charts.giving_race ?? []} />
                     </ChartCard>
                 </div>
 
