@@ -37,7 +37,7 @@ export function AppSidebar() {
     const role = (auth.user as any)?.role as string;
 
     const canAccessModules = ['admin', 'administrator', 'data_entry_officer'].includes(role);
-    const isAdmin = role === 'admin';
+    const isAdmin = ['admin', 'administrator'].includes(role);
 
     return (
         <Sidebar collapsible="icon" variant="inset">
