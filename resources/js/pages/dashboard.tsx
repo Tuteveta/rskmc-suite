@@ -29,6 +29,7 @@ const CHART_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#0
 const PIE_COLORS: Record<string, string> = {
     'Tithe': '#3b82f6', 'Offering': '#10b981', 'Special Offering': '#f59e0b',
     'Building Fund': '#f97316', 'Mission Fund': '#8b5cf6',
+    'Thanksgiving': '#14b8a6', 'Projects': '#f43f5e',
 };
 
 // ── Trend indicator ──────────────────────────────────────────────────────────

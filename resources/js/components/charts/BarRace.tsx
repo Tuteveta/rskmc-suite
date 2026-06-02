@@ -10,6 +10,8 @@ const COLORS: Record<string, string> = {
     'Special Offering': '#f59e0b',
     'Building Fund':    '#f97316',
     'Mission Fund':     '#8b5cf6',
+    'Thanksgiving':     '#14b8a6',
+    'Projects':         '#f43f5e',
 };
 const FALLBACK = ['#3b82f6', '#10b981', '#f59e0b', '#f97316', '#8b5cf6'];
 

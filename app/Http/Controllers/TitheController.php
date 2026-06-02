@@ -35,7 +35,7 @@ class TitheController extends Controller
     {
         $request->validate([
             'member_id'    => 'nullable|exists:members,id',
-            'giving_type'  => 'required|in:tithe,offering,special,building_fund,mission',
+            'giving_type'  => 'required|in:tithe,offering,special,building_fund,mission,thanksgiving,projects',
             'amount'       => 'required|numeric|min:0.01',
             'giving_date'  => 'required|date',
             'service_type' => 'nullable|string|max:100',
@@ -65,7 +65,7 @@ class TitheController extends Controller
     {
         $request->validate([
             'member_id'    => 'nullable|exists:members,id',
-            'giving_type'  => 'required|in:tithe,offering,special,building_fund,mission',
+            'giving_type'  => 'required|in:tithe,offering,special,building_fund,mission,thanksgiving,projects',
             'amount'       => 'required|numeric|min:0.01',
             'giving_date'  => 'required|date',
             'service_type' => 'nullable|string|max:100',

@@ -238,10 +238,18 @@ class DashboardController extends Controller
 
     private function memberStatusChart(): array
     {
+        $labels = [
+            'active'      => 'Active',
+            'inactive'    => 'Inactive',
+            'dedication'  => 'Dedication',
+            'new_convert' => 'New Convert',
+            'follow_up'   => 'Follow Up',
+        ];
+
         return Member::select('status', DB::raw('count(*) as count'))
             ->groupBy('status')
             ->get()
-            ->map(fn ($r) => ['label' => ucfirst($r->status), 'value' => (int) $r->count])
+            ->map(fn ($r) => ['label' => $labels[$r->status] ?? ucfirst($r->status), 'value' => (int) $r->count])
             ->toArray();
     }
 

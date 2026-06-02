@@ -33,6 +33,8 @@ class Tithe extends Model
             'special'       => 'Special Offering',
             'building_fund' => 'Building Fund',
             'mission'       => 'Mission Fund',
+            'thanksgiving'  => 'Thanksgiving',
+            'projects'      => 'Projects',
         ];
     }
 

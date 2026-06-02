@@ -31,7 +31,7 @@ class MemberController extends Controller
             'email'         => 'nullable|email|max:150',
             'address'       => 'nullable|string',
             'join_date'     => 'nullable|date',
-            'status'        => 'required|in:active,inactive',
+            'status'        => 'required|in:active,inactive,dedication,new_convert,follow_up',
             'notes'         => 'nullable|string',
         ]);
 
@@ -65,7 +65,7 @@ class MemberController extends Controller
             'email'         => 'nullable|email|max:150',
             'address'       => 'nullable|string',
             'join_date'     => 'nullable|date',
-            'status'        => 'required|in:active,inactive',
+            'status'        => 'required|in:active,inactive,dedication,new_convert,follow_up',
             'notes'         => 'nullable|string',
         ]);
 
