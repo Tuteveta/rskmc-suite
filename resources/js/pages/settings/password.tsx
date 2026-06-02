@@ -45,9 +45,8 @@ export default function Password() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Password settings" />
             <SettingsLayout>
-
                 <div className="glass rounded-xl">
-                    <div className="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+                    <div className="flex items-center gap-3 border-b border-gray-100 px-6 py-5">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100">
                             <KeyRound className="h-4 w-4 text-gray-600" />
                         </div>
@@ -59,8 +58,8 @@ export default function Password() {
 
                     <div className="px-6 py-6">
                         {/* Security tip */}
-                        <div className="flex items-start gap-3 rounded-lg bg-blue-50 border border-blue-100 px-4 py-3 mb-6">
-                            <ShieldCheck className="h-4 w-4 text-blue-500 flex-shrink-0 mt-0.5" />
+                        <div className="mb-6 flex items-start gap-3 rounded-lg border border-blue-100 bg-blue-50 px-4 py-3">
+                            <ShieldCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-500" />
                             <p className="text-xs text-blue-700">
                                 Choose a password with at least 8 characters, mixing letters, numbers, and symbols.
                             </p>
@@ -130,13 +129,12 @@ export default function Password() {
                                     leave="transition ease-in-out duration-150"
                                     leaveTo="opacity-0"
                                 >
-                                    <p className="text-sm text-green-600 font-medium">✓ Password updated</p>
+                                    <p className="text-sm font-medium text-green-600">✓ Password updated</p>
                                 </Transition>
                             </div>
                         </form>
                     </div>
                 </div>
-
             </SettingsLayout>
         </AppLayout>
     );

@@ -20,11 +20,14 @@ export default function AuthCardLayout({
     }, []);
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 md:p-10" style={{ background: 'linear-gradient(145deg, #f8f9ff 0%, #fdf8ff 35%, #f6fbff 70%, #f9fff8 100%)', backgroundAttachment: 'fixed' }}>
+        <div
+            className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 md:p-10"
+            style={{ background: 'linear-gradient(145deg, #f8f9ff 0%, #fdf8ff 35%, #f6fbff 70%, #f9fff8 100%)', backgroundAttachment: 'fixed' }}
+        >
             <div className="w-full max-w-sm sm:max-w-md">
                 {/* Glass card */}
                 <div
-                    className="rounded-2xl overflow-hidden"
+                    className="overflow-hidden rounded-2xl"
                     style={{
                         background: 'rgba(255,255,255,0.80)',
                         backdropFilter: 'blur(20px) saturate(180%)',
@@ -38,24 +41,20 @@ export default function AuthCardLayout({
                         <img
                             src="/logo.jpg"
                             alt="Rev Sione Kami Memorial Church"
-                            className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover shadow-md ring-2 ring-white"
+                            className="h-20 w-20 rounded-full object-cover shadow-md ring-2 ring-white sm:h-24 sm:w-24"
                         />
                         <div>
-                            <h1 className="text-base sm:text-lg font-bold tracking-tight text-gray-900">
-                                Rev Sione Kami Memorial Church
-                            </h1>
-                            <p className="text-xs text-indigo-400 mt-0.5 font-medium tracking-wide">RSKMC Suite</p>
+                            <h1 className="text-base font-bold tracking-tight text-gray-900 sm:text-lg">Rev Sione Kami Memorial Church</h1>
+                            <p className="mt-0.5 text-xs font-medium tracking-wide text-indigo-400">RSKMC Suite</p>
                         </div>
                         <div className="w-full border-t border-gray-100 pt-4">
-                            <p className="text-lg sm:text-xl font-bold text-gray-900">{title}</p>
-                            <p className="text-xs sm:text-sm text-gray-400 mt-1">{description}</p>
+                            <p className="text-lg font-bold text-gray-900 sm:text-xl">{title}</p>
+                            <p className="mt-1 text-xs text-gray-400 sm:text-sm">{description}</p>
                         </div>
                     </div>
 
                     {/* Form content */}
-                    <div className="px-6 py-6 sm:px-10 sm:py-8">
-                        {children}
-                    </div>
+                    <div className="px-6 py-6 sm:px-10 sm:py-8">{children}</div>
                 </div>
 
                 {/* Footer */}

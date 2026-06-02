@@ -28,16 +28,19 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
     };
 
     const initials = (auth.user.name ?? 'U')
-        .split(' ').map((w: string) => w[0]).slice(0, 2).join('').toUpperCase();
+        .split(' ')
+        .map((w: string) => w[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Profile settings" />
             <SettingsLayout>
-
                 {/* Profile card */}
                 <div className="glass rounded-xl">
-                    <div className="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+                    <div className="flex items-center gap-3 border-b border-gray-100 px-6 py-5">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100">
                             <User className="h-4 w-4 text-gray-600" />
                         </div>
@@ -49,8 +52,8 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
                     <div className="px-6 py-6">
                         {/* Avatar */}
-                        <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
-                            <div className="h-16 w-16 rounded-full bg-gray-900 flex items-center justify-center text-white text-xl font-bold">
+                        <div className="mb-6 flex items-center gap-4 border-b border-gray-100 pb-6">
+                            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-900 text-xl font-bold text-white">
                                 {initials}
                             </div>
                             <div>
@@ -64,7 +67,9 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
                         <form onSubmit={submit} className="space-y-5">
                             <div className="grid gap-1.5">
-                                <Label htmlFor="name" className="text-sm font-medium text-gray-700">Full Name</Label>
+                                <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+                                    Full Name
+                                </Label>
                                 <Input
                                     id="name"
                                     value={data.name}
@@ -78,9 +83,11 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             </div>
 
                             <div className="grid gap-1.5">
-                                <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address</Label>
+                                <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                                    Email Address
+                                </Label>
                                 <div className="relative">
-                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                                    <Mail className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
                                     <Input
                                         id="email"
                                         type="email"
@@ -96,18 +103,18 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             </div>
 
                             {mustVerifyEmail && auth.user.email_verified_at === null && (
-                                <div className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+                                <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
                                     Your email address is unverified.{' '}
                                     <Link
                                         href={route('verification.send')}
                                         method="post"
                                         as="button"
-                                        className="underline font-medium hover:text-amber-900"
+                                        className="font-medium underline hover:text-amber-900"
                                     >
                                         Resend verification email.
                                     </Link>
                                     {status === 'verification-link-sent' && (
-                                        <p className="mt-1 text-green-600 font-medium">Verification link sent!</p>
+                                        <p className="mt-1 font-medium text-green-600">Verification link sent!</p>
                                     )}
                                 </div>
                             )}
@@ -123,7 +130,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                     leave="transition ease-in-out duration-150"
                                     leaveTo="opacity-0"
                                 >
-                                    <p className="text-sm text-green-600 font-medium">✓ Saved successfully</p>
+                                    <p className="text-sm font-medium text-green-600">✓ Saved successfully</p>
                                 </Transition>
                             </div>
                         </form>
@@ -132,7 +139,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
                 {/* Danger zone */}
                 <div className="glass rounded-xl border-red-200">
-                    <div className="px-6 py-5 border-b border-red-100 flex items-center gap-3">
+                    <div className="flex items-center gap-3 border-b border-red-100 px-6 py-5">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-50">
                             <ShieldAlert className="h-4 w-4 text-red-500" />
                         </div>
@@ -145,7 +152,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <p className="text-sm font-medium text-gray-900">Delete Account</p>
-                                <p className="text-xs text-gray-500 mt-0.5">
+                                <p className="mt-0.5 text-xs text-gray-500">
                                     Permanently delete your account and all associated data. This cannot be undone.
                                 </p>
                             </div>
@@ -153,7 +160,6 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                         </div>
                     </div>
                 </div>
-
             </SettingsLayout>
         </AppLayout>
     );

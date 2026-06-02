@@ -1,13 +1,19 @@
-import { Head, Link, router, usePage } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { UserPlus } from 'lucide-react';
 import ExportFilterModal from '@/components/export-filter-modal';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import AppLayout from '@/layouts/app-layout';
+import { Head, Link, router, usePage } from '@inertiajs/react';
+import { UserPlus } from 'lucide-react';
 
 interface Member {
-    id: number; member_number: string; first_name: string; last_name: string;
-    gender: string; phone: string | null; status: 'active' | 'inactive'; join_date: string | null;
+    id: number;
+    member_number: string;
+    first_name: string;
+    last_name: string;
+    gender: string;
+    phone: string | null;
+    status: 'active' | 'inactive';
+    join_date: string | null;
 }
 interface Props {
     members: { data: Member[]; links: { url: string | null; label: string; active: boolean }[] };
@@ -25,8 +31,8 @@ export default function MembersIndex({ members }: Props) {
     return (
         <AppLayout breadcrumbs={[{ title: 'Members', href: '/members' }]}>
             <Head title="Members" />
-            <div className="p-4 sm:p-6 space-y-4">
-                <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="space-y-4 p-4 sm:p-6">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                     <h1 className="text-2xl font-semibold">Congregation Members</h1>
                     <div className="flex gap-2">
                         <ExportFilterModal
@@ -34,21 +40,40 @@ export default function MembersIndex({ members }: Props) {
                             excelRoute={route('export.members.excel')}
                             pdfRoute={route('export.members.pdf')}
                             filters={[
-                                { key: 'status', label: 'Status', type: 'select', options: [{ value: 'active', label: 'Active' }, { value: 'inactive', label: 'Inactive' }] },
-                                { key: 'gender', label: 'Gender', type: 'select', options: [{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }] },
+                                {
+                                    key: 'status',
+                                    label: 'Status',
+                                    type: 'select',
+                                    options: [
+                                        { value: 'active', label: 'Active' },
+                                        { value: 'inactive', label: 'Inactive' },
+                                    ],
+                                },
+                                {
+                                    key: 'gender',
+                                    label: 'Gender',
+                                    type: 'select',
+                                    options: [
+                                        { value: 'male', label: 'Male' },
+                                        { value: 'female', label: 'Female' },
+                                    ],
+                                },
                                 { key: 'join_date_from', label: 'Joined From', type: 'date' },
-                                { key: 'join_date_to',   label: 'Joined To',   type: 'date' },
+                                { key: 'join_date_to', label: 'Joined To', type: 'date' },
                             ]}
                         />
                         <Link href={route('members.create')}>
-                            <Button><UserPlus className="mr-2 h-4 w-4" />Add Member</Button>
+                            <Button>
+                                <UserPlus className="mr-2 h-4 w-4" />
+                                Add Member
+                            </Button>
                         </Link>
                     </div>
                 </div>
 
-                <div className="glass rounded-xl overflow-x-auto">
+                <div className="glass overflow-x-auto rounded-xl">
                     <table className="w-full text-sm">
-                        <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
+                        <thead className="bg-gray-50 text-xs text-gray-600 uppercase">
                             <tr>
                                 <th className="px-4 py-3 text-left">No.</th>
                                 <th className="px-4 py-3 text-left">Name</th>
@@ -62,8 +87,10 @@ export default function MembersIndex({ members }: Props) {
                         <tbody className="divide-y">
                             {members.data.map((m) => (
                                 <tr key={m.id} className="hover:bg-gray-50">
-                                    <td className="px-4 py-3 text-gray-400 font-mono text-xs">{m.member_number}</td>
-                                    <td className="px-4 py-3 font-medium">{m.last_name}, {m.first_name}</td>
+                                    <td className="px-4 py-3 font-mono text-xs text-gray-400">{m.member_number}</td>
+                                    <td className="px-4 py-3 font-medium">
+                                        {m.last_name}, {m.first_name}
+                                    </td>
                                     <td className="px-4 py-3 capitalize">{m.gender}</td>
                                     <td className="px-4 py-3">{m.phone ?? '—'}</td>
                                     <td className="px-4 py-3">
@@ -71,28 +98,38 @@ export default function MembersIndex({ members }: Props) {
                                     </td>
                                     <td className="px-4 py-3">{m.join_date ?? '—'}</td>
                                     <td className="px-4 py-3">
-                                        <div className="flex gap-2 justify-end">
+                                        <div className="flex justify-end gap-2">
                                             <Link href={route('members.edit', m.id)}>
-                                                <Button size="sm" variant="outline">Edit</Button>
+                                                <Button size="sm" variant="outline">
+                                                    Edit
+                                                </Button>
                                             </Link>
                                             {canDelete && (
-                                                <Button size="sm" variant="destructive" onClick={() => destroy(m.id)}>Delete</Button>
+                                                <Button size="sm" variant="destructive" onClick={() => destroy(m.id)}>
+                                                    Delete
+                                                </Button>
                                             )}
                                         </div>
                                     </td>
                                 </tr>
                             ))}
                             {members.data.length === 0 && (
-                                <tr><td colSpan={7} className="px-4 py-8 text-center text-gray-400">No members found.</td></tr>
+                                <tr>
+                                    <td colSpan={7} className="px-4 py-8 text-center text-gray-400">
+                                        No members found.
+                                    </td>
+                                </tr>
                             )}
                         </tbody>
                     </table>
                 </div>
 
-                <div className="flex gap-1 flex-wrap">
+                <div className="flex flex-wrap gap-1">
                     {members.links.map((link, i) => (
-                        <Link key={i} href={link.url ?? '#'}
-                            className={`px-3 py-1 rounded border text-sm ${link.active ? 'bg-black text-white' : 'bg-white text-gray-700 hover:bg-gray-50'} ${!link.url ? 'opacity-40 pointer-events-none' : ''}`}
+                        <Link
+                            key={i}
+                            href={link.url ?? '#'}
+                            className={`rounded border px-3 py-1 text-sm ${link.active ? 'bg-black text-white' : 'bg-white text-gray-700 hover:bg-gray-50'} ${!link.url ? 'pointer-events-none opacity-40' : ''}`}
                             dangerouslySetInnerHTML={{ __html: link.label }}
                         />
                     ))}

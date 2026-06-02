@@ -12,9 +12,8 @@ export default function Appearance() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Appearance settings" />
             <SettingsLayout>
-
                 <div className="glass rounded-xl">
-                    <div className="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+                    <div className="flex items-center gap-3 border-b border-gray-100 px-6 py-5">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100">
                             <Monitor className="h-4 w-4 text-gray-600" />
                         </div>
@@ -27,7 +26,6 @@ export default function Appearance() {
                         <AppearanceTabs />
                     </div>
                 </div>
-
             </SettingsLayout>
         </AppLayout>
     );

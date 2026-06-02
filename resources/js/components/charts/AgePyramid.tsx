@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { useEffect, useRef } from 'react';
 
 interface AgeGroup {
     age_group: string;
@@ -25,20 +25,18 @@ export default function AgePyramid({ data }: { data: AgeGroup[] }) {
 
         const g = svg.append('g').attr('transform', `translate(${margin.left + w / 2},${margin.top})`);
 
-        const maxVal = d3.max(data, d => Math.max(d.male, d.female)) || 1;
+        const maxVal = d3.max(data, (d) => Math.max(d.male, d.female)) || 1;
         const x = d3.scaleLinear().domain([0, maxVal]).range([0, half]);
-        const y = d3.scaleBand().domain(data.map(d => d.age_group)).range([0, h]).padding(0.2);
+        const y = d3
+            .scaleBand()
+            .domain(data.map((d) => d.age_group))
+            .range([0, h])
+            .padding(0.2);
 
         // Gridlines
         for (const tick of x.ticks(4)) {
-            g.append('line')
-                .attr('x1', x(tick)).attr('x2', x(tick))
-                .attr('y1', 0).attr('y2', h)
-                .attr('stroke', '#f1f5f9').attr('stroke-width', 1);
-            g.append('line')
-                .attr('x1', -x(tick)).attr('x2', -x(tick))
-                .attr('y1', 0).attr('y2', h)
-                .attr('stroke', '#f1f5f9').attr('stroke-width', 1);
+            g.append('line').attr('x1', x(tick)).attr('x2', x(tick)).attr('y1', 0).attr('y2', h).attr('stroke', '#f1f5f9').attr('stroke-width', 1);
+            g.append('line').attr('x1', -x(tick)).attr('x2', -x(tick)).attr('y1', 0).attr('y2', h).attr('stroke', '#f1f5f9').attr('stroke-width', 1);
         }
 
         // Female bars (left)
@@ -46,62 +44,89 @@ export default function AgePyramid({ data }: { data: AgeGroup[] }) {
             .data(data)
             .join('rect')
             .attr('class', 'bar-f')
-            .attr('x', 0).attr('y', d => y(d.age_group)!)
-            .attr('width', 0).attr('height', y.bandwidth())
-            .attr('fill', '#ec4899').attr('rx', 3)
-            .transition().duration(700).delay((_, i) => i * 60)
-            .attr('x', d => -x(d.female))
-            .attr('width', d => x(d.female));
+            .attr('x', 0)
+            .attr('y', (d) => y(d.age_group)!)
+            .attr('width', 0)
+            .attr('height', y.bandwidth())
+            .attr('fill', '#ec4899')
+            .attr('rx', 3)
+            .transition()
+            .duration(700)
+            .delay((_, i) => i * 60)
+            .attr('x', (d) => -x(d.female))
+            .attr('width', (d) => x(d.female));
 
         // Male bars (right)
         g.selectAll('.bar-m')
             .data(data)
             .join('rect')
             .attr('class', 'bar-m')
-            .attr('x', 0).attr('y', d => y(d.age_group)!)
-            .attr('width', 0).attr('height', y.bandwidth())
-            .attr('fill', '#3b82f6').attr('rx', 3)
-            .transition().duration(700).delay((_, i) => i * 60)
-            .attr('width', d => x(d.male));
+            .attr('x', 0)
+            .attr('y', (d) => y(d.age_group)!)
+            .attr('width', 0)
+            .attr('height', y.bandwidth())
+            .attr('fill', '#3b82f6')
+            .attr('rx', 3)
+            .transition()
+            .duration(700)
+            .delay((_, i) => i * 60)
+            .attr('width', (d) => x(d.male));
 
         // Value labels – female
         g.selectAll('.lbl-f')
             .data(data)
             .join('text')
             .attr('class', 'lbl-f')
-            .attr('x', d => -x(d.female) - 4)
-            .attr('y', d => y(d.age_group)! + y.bandwidth() / 2 + 4)
-            .attr('text-anchor', 'end').attr('font-size', 9).attr('fill', '#9ca3af')
-            .text(d => d.female || '');
+            .attr('x', (d) => -x(d.female) - 4)
+            .attr('y', (d) => y(d.age_group)! + y.bandwidth() / 2 + 4)
+            .attr('text-anchor', 'end')
+            .attr('font-size', 9)
+            .attr('fill', '#9ca3af')
+            .text((d) => d.female || '');
 
         // Value labels – male
         g.selectAll('.lbl-m')
             .data(data)
             .join('text')
             .attr('class', 'lbl-m')
-            .attr('x', d => x(d.male) + 4)
-            .attr('y', d => y(d.age_group)! + y.bandwidth() / 2 + 4)
-            .attr('font-size', 9).attr('fill', '#9ca3af')
-            .text(d => d.male || '');
+            .attr('x', (d) => x(d.male) + 4)
+            .attr('y', (d) => y(d.age_group)! + y.bandwidth() / 2 + 4)
+            .attr('font-size', 9)
+            .attr('fill', '#9ca3af')
+            .text((d) => d.male || '');
 
         // Center age labels
         g.selectAll('.age-lbl')
             .data(data)
             .join('text')
             .attr('class', 'age-lbl')
-            .attr('x', 0).attr('y', d => y(d.age_group)! + y.bandwidth() / 2 + 4)
-            .attr('text-anchor', 'middle').attr('font-size', 10).attr('fill', '#6b7280')
-            .text(d => d.age_group);
+            .attr('x', 0)
+            .attr('y', (d) => y(d.age_group)! + y.bandwidth() / 2 + 4)
+            .attr('text-anchor', 'middle')
+            .attr('font-size', 10)
+            .attr('fill', '#6b7280')
+            .text((d) => d.age_group);
 
         // X-axis tick labels
         const xRight = d3.axisBottom(x).ticks(4).tickSize(3);
-        const xLeft  = d3.axisBottom(d3.scaleLinear().domain([maxVal, 0]).range([0, half])).ticks(4).tickSize(3);
-        g.append('g').attr('transform', `translate(0,${h})`).call(xRight)
-            .call(gg => gg.select('.domain').remove())
-            .selectAll('text').attr('font-size', 8).attr('fill', '#9ca3af');
-        g.append('g').attr('transform', `translate(${-half},${h})`).call(xLeft)
-            .call(gg => gg.select('.domain').remove())
-            .selectAll('text').attr('font-size', 8).attr('fill', '#9ca3af');
+        const xLeft = d3
+            .axisBottom(d3.scaleLinear().domain([maxVal, 0]).range([0, half]))
+            .ticks(4)
+            .tickSize(3);
+        g.append('g')
+            .attr('transform', `translate(0,${h})`)
+            .call(xRight)
+            .call((gg) => gg.select('.domain').remove())
+            .selectAll('text')
+            .attr('font-size', 8)
+            .attr('fill', '#9ca3af');
+        g.append('g')
+            .attr('transform', `translate(${-half},${h})`)
+            .call(xLeft)
+            .call((gg) => gg.select('.domain').remove())
+            .selectAll('text')
+            .attr('font-size', 8)
+            .attr('fill', '#9ca3af');
 
         // Legend
         const leg = svg.append('g').attr('transform', `translate(${margin.left},6)`);

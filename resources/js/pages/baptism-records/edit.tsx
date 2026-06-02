@@ -1,70 +1,123 @@
-import { Head, useForm } from '@inertiajs/react';
-import AppLayout from '@/layouts/app-layout';
+import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import InputError from '@/components/input-error';
+import AppLayout from '@/layouts/app-layout';
+import { Head, useForm } from '@inertiajs/react';
 
 interface BaptismRecord {
-    id: number; member_id: number | null; first_name: string; last_name: string;
-    date_of_birth: string | null; date_of_baptism: string; baptism_type: string;
-    place_of_baptism: string | null; officiant: string; father_name: string | null;
-    mother_name: string | null; witnesses: string | null; notes: string | null;
+    id: number;
+    member_id: number | null;
+    first_name: string;
+    last_name: string;
+    date_of_birth: string | null;
+    date_of_baptism: string;
+    baptism_type: string;
+    place_of_baptism: string | null;
+    officiant: string;
+    father_name: string | null;
+    mother_name: string | null;
+    witnesses: string | null;
+    notes: string | null;
 }
-interface Member { id: number; first_name: string; last_name: string; member_number: string; }
+interface Member {
+    id: number;
+    first_name: string;
+    last_name: string;
+    member_number: string;
+}
 
-export default function BaptismRecordEdit({ record, members, baptism_types }: { record: BaptismRecord; members: Member[]; baptism_types: Record<string, string> }) {
+export default function BaptismRecordEdit({
+    record,
+    members,
+    baptism_types,
+}: {
+    record: BaptismRecord;
+    members: Member[];
+    baptism_types: Record<string, string>;
+}) {
     const { data, setData, put, processing, errors } = useForm({
         member_id: record.member_id ? String(record.member_id) : '',
-        first_name: record.first_name, last_name: record.last_name,
-        date_of_birth: record.date_of_birth ?? '', date_of_baptism: record.date_of_baptism,
+        first_name: record.first_name,
+        last_name: record.last_name,
+        date_of_birth: record.date_of_birth ?? '',
+        date_of_baptism: record.date_of_baptism,
         baptism_type: record.baptism_type ?? 'infant',
-        place_of_baptism: record.place_of_baptism ?? '', officiant: record.officiant,
-        father_name: record.father_name ?? '', mother_name: record.mother_name ?? '',
-        witnesses: record.witnesses ?? '', notes: record.notes ?? '',
+        place_of_baptism: record.place_of_baptism ?? '',
+        officiant: record.officiant,
+        father_name: record.father_name ?? '',
+        mother_name: record.mother_name ?? '',
+        witnesses: record.witnesses ?? '',
+        notes: record.notes ?? '',
     });
 
-    const submit = (e: React.FormEvent) => { e.preventDefault(); put(route('baptism-records.update', record.id)); };
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault();
+        put(route('baptism-records.update', record.id));
+    };
 
     return (
-        <AppLayout breadcrumbs={[{ title: 'Baptism Records', href: '/baptism-records' }, { title: 'Edit Record', href: '#' }]}>
+        <AppLayout
+            breadcrumbs={[
+                { title: 'Baptism Records', href: '/baptism-records' },
+                { title: 'Edit Record', href: '#' },
+            ]}
+        >
             <Head title="Edit Baptism Record" />
-            <div className="p-4 sm:p-6 w-full max-w-2xl">
-                <h1 className="text-2xl font-semibold mb-6">Edit Baptism Record</h1>
-                <form onSubmit={submit} className="space-y-4 glass rounded-xl p-6">
+            <div className="w-full max-w-2xl p-4 sm:p-6">
+                <h1 className="mb-6 text-2xl font-semibold">Edit Baptism Record</h1>
+                <form onSubmit={submit} className="glass space-y-4 rounded-xl p-6">
                     <div>
                         <Label>Link to Member (optional)</Label>
-                        <select className="w-full border rounded-md px-3 py-2 text-sm" value={data.member_id} onChange={e => setData('member_id', e.target.value)}>
+                        <select
+                            className="w-full rounded-md border px-3 py-2 text-sm"
+                            value={data.member_id}
+                            onChange={(e) => setData('member_id', e.target.value)}
+                        >
                             <option value="">— Not linked —</option>
-                            {members.map(m => <option key={m.id} value={m.id}>{m.last_name}, {m.first_name} ({m.member_number})</option>)}
+                            {members.map((m) => (
+                                <option key={m.id} value={m.id}>
+                                    {m.last_name}, {m.first_name} ({m.member_number})
+                                </option>
+                            ))}
                         </select>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div>
                             <Label>First Name *</Label>
-                            <Input value={data.first_name} onChange={e => setData('first_name', e.target.value)} />
+                            <Input value={data.first_name} onChange={(e) => setData('first_name', e.target.value)} />
                             <InputError message={errors.first_name} />
                         </div>
                         <div>
                             <Label>Last Name *</Label>
-                            <Input value={data.last_name} onChange={e => setData('last_name', e.target.value)} />
+                            <Input value={data.last_name} onChange={(e) => setData('last_name', e.target.value)} />
                             <InputError message={errors.last_name} />
                         </div>
                         <div>
                             <Label>Date of Birth</Label>
-                            <Input type="date" value={data.date_of_birth} onChange={e => setData('date_of_birth', e.target.value)} />
+                            <Input type="date" value={data.date_of_birth} onChange={(e) => setData('date_of_birth', e.target.value)} />
                         </div>
                         <div>
                             <Label>Date of Baptism *</Label>
-                            <Input type="date" value={data.date_of_baptism} onChange={e => setData('date_of_baptism', e.target.value)} />
+                            <Input type="date" value={data.date_of_baptism} onChange={(e) => setData('date_of_baptism', e.target.value)} />
                             <InputError message={errors.date_of_baptism} />
                         </div>
                         <div className="col-span-2">
                             <Label>Baptism Type *</Label>
-                            <div className="flex gap-3 mt-1">
+                            <div className="mt-1 flex gap-3">
                                 {Object.entries(baptism_types).map(([value, label]) => (
-                                    <label key={value} className={`flex-1 flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 cursor-pointer text-sm font-medium transition-colors ${data.baptism_type === value ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 text-gray-600 hover:border-gray-400'}`}>
-                                        <input type="radio" name="baptism_type" value={value} checked={data.baptism_type === value} onChange={() => setData('baptism_type', value)} className="sr-only" />
+                                    <label
+                                        key={value}
+                                        className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 px-4 py-3 text-sm font-medium transition-colors ${data.baptism_type === value ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 text-gray-600 hover:border-gray-400'}`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="baptism_type"
+                                            value={value}
+                                            checked={data.baptism_type === value}
+                                            onChange={() => setData('baptism_type', value)}
+                                            className="sr-only"
+                                        />
                                         {label}
                                     </label>
                                 ))}
@@ -73,33 +126,42 @@ export default function BaptismRecordEdit({ record, members, baptism_types }: { 
                         </div>
                         <div>
                             <Label>Place of Baptism</Label>
-                            <Input value={data.place_of_baptism} onChange={e => setData('place_of_baptism', e.target.value)} />
+                            <Input value={data.place_of_baptism} onChange={(e) => setData('place_of_baptism', e.target.value)} />
                         </div>
                         <div>
                             <Label>Officiant *</Label>
-                            <Input value={data.officiant} onChange={e => setData('officiant', e.target.value)} />
+                            <Input value={data.officiant} onChange={(e) => setData('officiant', e.target.value)} />
                             <InputError message={errors.officiant} />
                         </div>
                         <div>
                             <Label>Father's Name</Label>
-                            <Input value={data.father_name} onChange={e => setData('father_name', e.target.value)} />
+                            <Input value={data.father_name} onChange={(e) => setData('father_name', e.target.value)} />
                         </div>
                         <div>
                             <Label>Mother's Name</Label>
-                            <Input value={data.mother_name} onChange={e => setData('mother_name', e.target.value)} />
+                            <Input value={data.mother_name} onChange={(e) => setData('mother_name', e.target.value)} />
                         </div>
                         <div className="col-span-2">
                             <Label>Witnesses</Label>
-                            <Input value={data.witnesses} onChange={e => setData('witnesses', e.target.value)} />
+                            <Input value={data.witnesses} onChange={(e) => setData('witnesses', e.target.value)} />
                         </div>
                         <div className="col-span-2">
                             <Label>Notes</Label>
-                            <textarea className="w-full border rounded-md px-3 py-2 text-sm" rows={3} value={data.notes} onChange={e => setData('notes', e.target.value)} />
+                            <textarea
+                                className="w-full rounded-md border px-3 py-2 text-sm"
+                                rows={3}
+                                value={data.notes}
+                                onChange={(e) => setData('notes', e.target.value)}
+                            />
                         </div>
                     </div>
                     <div className="flex gap-3 pt-2">
-                        <Button type="submit" disabled={processing}>Update Record</Button>
-                        <Button type="button" variant="outline" onClick={() => history.back()}>Cancel</Button>
+                        <Button type="submit" disabled={processing}>
+                            Update Record
+                        </Button>
+                        <Button type="button" variant="outline" onClick={() => history.back()}>
+                            Cancel
+                        </Button>
                     </div>
                 </form>
             </div>

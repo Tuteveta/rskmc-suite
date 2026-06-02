@@ -152,17 +152,14 @@
         @apply border-border;
     }
 
-    html, body {
+    html,
+    body {
         min-height: 100vh;
     }
 
     body {
         @apply text-foreground;
-        background: linear-gradient(145deg,
-            #f8f9ff 0%,
-            #fdf8ff 35%,
-            #f6fbff 70%,
-            #f9fff8 100%);
+        background: linear-gradient(145deg, #f8f9ff 0%, #fdf8ff 35%, #f6fbff 70%, #f9fff8 100%);
         background-attachment: fixed;
     }
 }
@@ -174,31 +171,31 @@
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.65);
     box-shadow:
-        0 2px 8px rgba(0,0,0,0.05),
-        0 8px 32px rgba(99,102,241,0.07),
-        inset 0 1px 0 rgba(255,255,255,0.9);
+        0 2px 8px rgba(0, 0, 0, 0.05),
+        0 8px 32px rgba(99, 102, 241, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .glass-strong {
-    background: rgba(255, 255, 255, 0.90);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(24px) saturate(200%);
     -webkit-backdrop-filter: blur(24px) saturate(200%);
     border: 1px solid rgba(255, 255, 255, 0.7);
     box-shadow:
-        0 4px 16px rgba(0,0,0,0.06),
-        0 16px 48px rgba(99,102,241,0.08),
-        inset 0 1px 0 rgba(255,255,255,1);
+        0 4px 16px rgba(0, 0, 0, 0.06),
+        0 16px 48px rgba(99, 102, 241, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* Sidebar crystal */
-[data-sidebar="sidebar"] {
+[data-sidebar='sidebar'] {
     background: rgba(255, 255, 255, 0.88) !important;
     backdrop-filter: blur(24px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.6) !important;
-    box-shadow: 4px 0 20px rgba(99,102,241,0.06) !important;
+    box-shadow: 4px 0 20px rgba(99, 102, 241, 0.06) !important;
 }
 
-[data-sidebar="inset"] {
+[data-sidebar='inset'] {
     background: transparent !important;
 }
