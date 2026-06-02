@@ -8,7 +8,7 @@ A full-featured church management platform built for the **Royale Samoan Kingdom
 
 | Layer | Technology |
 |---|---|
-| Backend | Laravel 11 (PHP 8.2+) |
+| Backend | Laravel 12 (PHP 8.2+) |
 | Frontend | React 19 + TypeScript + Inertia.js |
 | Styling | Tailwind CSS v4 + shadcn/ui |
 | Charts | Recharts + D3.js v7 |
@@ -20,11 +20,11 @@ A full-featured church management platform built for the **Royale Samoan Kingdom
 
 ## Features
 
-- **Congregation Members** — Full CRUD with member numbers, status tracking, gender, DOB, contact details, and join date
+- **Congregation Members** — Full CRUD with member numbers, status tracking (Active, Inactive, Dedication, New Convert, Follow Up), gender, DOB, contact details, and join date
 - **Baptism Records** — Sacramental records with officiant, parents, and place of baptism
 - **Marriage Records** — Wedding records linked to members
 - **Funeral Records** — Funeral and bereavement records
-- **Tithes & Offerings** — Multi-type giving records (Tithe, Offering, Special Offering, Building Fund, Mission Fund) with PDF giving statements
+- **Tithes & Offerings** — Multi-type giving records (Tithe, Offering, Special Offering, Building Fund, Mission Fund, Thanksgiving, Projects) with PDF giving statements
 - **Asset Register** — Track church property, vehicles, equipment with maintenance logs and condition tracking
 - **Analytics Dashboard** — Live Recharts + D3.js charts including:
   - Member growth (area chart)

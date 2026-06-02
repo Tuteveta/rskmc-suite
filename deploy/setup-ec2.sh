@@ -1,8 +1,12 @@
 #!/bin/bash
 # RSKMC Suite — EC2 Ubuntu 22.04/24.04/25.04 Setup Script
-# Run as: bash setup-ec2.sh
+# Run as: bash setup-ec2.sh [db-password] [admin-password]
+# If passwords are not supplied, strong random ones are generated and printed at the end.
 
 set -e
+
+DB_PASS="${1:-$(openssl rand -base64 24 | tr -d '/+=' | head -c 28)}"
+ADMIN_PASS="${2:-$(openssl rand -base64 18 | tr -d '/+=' | head -c 20)}"
 
 echo "=========================================="
 echo "  RSKMC Suite — EC2 Deployment Setup"
@@ -32,7 +36,6 @@ sudo systemctl start mysql
 sudo systemctl enable mysql
 
 # Set MySQL root password and create database
-DB_PASS="RskmcSuite@2025!"
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${DB_PASS}';"
 sudo mysql -u root -p${DB_PASS} -e "CREATE DATABASE IF NOT EXISTS rskmc_suite CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 sudo mysql -u root -p${DB_PASS} -e "CREATE USER IF NOT EXISTS 'rskmc'@'localhost' IDENTIFIED BY '${DB_PASS}';"
@@ -102,7 +105,7 @@ npm run build
 php artisan migrate --seed --force
 
 # Create admin user
-php artisan tinker --execute="App\Models\User::firstOrCreate(['email'=>'admin@rskmc.org'],['name'=>'Admin','role'=>'admin','password'=>bcrypt('Admin@rskmc2025'),'email_verified_at'=>now()]);"
+php artisan tinker --execute="App\Models\User::firstOrCreate(['email'=>'admin@rskmc.org'],['name'=>'Admin','role'=>'admin','password'=>bcrypt('${ADMIN_PASS}'),'email_verified_at'=>now()]);"
 
 # Permissions
 sudo chown -R www-data:www-data /var/www/rskmc-suite/storage
@@ -171,9 +174,12 @@ echo "=========================================="
 echo "  RSKMC Suite is LIVE!"
 echo "=========================================="
 echo ""
-echo "  URL:      http://${PUBLIC_IP}"
-echo "  Email:    admin@rskmc.org"
-echo "  Password: Admin@rskmc2025"
+echo "  URL:        http://${PUBLIC_IP}"
+echo "  Email:      admin@rskmc.org"
+echo "  Password:   ${ADMIN_PASS}"
+echo "  DB User:    rskmc"
+echo "  DB Pass:    ${DB_PASS}"
 echo ""
-echo "  Change the admin password immediately after first login."
+echo "  IMPORTANT: Save these credentials now. Change the admin password"
+echo "  immediately after first login."
 echo "=========================================="

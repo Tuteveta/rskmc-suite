@@ -1,20 +1,21 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/react-starter-kit",
+    "name": "rskmc/suite",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Church management system for Royale Samoan Kingdom Mission Church, Port Moresby, PNG.",
     "keywords": [
-        "laravel",
-        "framework"
+        "church",
+        "cms",
+        "laravel"
     ],
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": "^8.2",
-        "barryvdh/laravel-dompdf": "*",
+        "barryvdh/laravel-dompdf": "^3.1",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "maatwebsite/excel": "*",
+        "maatwebsite/excel": "^1.1",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
