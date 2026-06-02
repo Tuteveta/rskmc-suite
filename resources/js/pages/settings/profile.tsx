@@ -57,7 +57,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                 <p className="text-sm font-semibold text-gray-900">{auth.user.name}</p>
                                 <p className="text-xs text-gray-400">{auth.user.email}</p>
                                 <span className="mt-1 inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600 capitalize">
-                                    {(auth.user as any).role?.replace(/_/g, ' ') ?? 'User'}
+                                    {String(auth.user.role ?? 'User').replace(/_/g, ' ')}
                                 </span>
                             </div>
                         </div>

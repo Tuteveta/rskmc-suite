@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Lock, Palette, User } from 'lucide-react';
 
@@ -9,7 +10,7 @@ const navItems = [
 ];
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const currentPath = window.location.pathname;
 
     const initials = (auth?.user?.name ?? 'U')

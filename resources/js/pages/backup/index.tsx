@@ -7,7 +7,7 @@ interface Backup { name: string; path: string; size: string; created_at: string;
 interface Props { backups: Backup[]; }
 
 export default function BackupIndex({ backups }: Props) {
-    const { post, processing } = useForm({});
+    const { processing } = useForm({});
 
     const runBackup = () => {
         router.post(route('backup.create'));

@@ -1,7 +1,7 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, FileSpreadsheet, FileText } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 
 interface Tithe { id: number; receipt_number: string; giving_type: string; amount: string; giving_date: string; service_type: string | null; member: { first_name: string; last_name: string } | null; }
 interface Props {
@@ -17,7 +17,7 @@ const typeColor: Record<string, string> = {
 };
 
 export default function TithesIndex({ tithes, giving_types, totals }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const canDelete = ['admin', 'administrator'].includes(auth.user?.role);
 
     const destroy = (id: number) => {

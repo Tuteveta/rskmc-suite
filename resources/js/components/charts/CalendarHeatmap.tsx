@@ -78,7 +78,7 @@ export default function CalendarHeatmap({ data }: { data: HeatDay[] }) {
         // Color legend
         const legW = 80;
         const legG = svg.append('g').attr('transform', `translate(${svgW - legW - margin.right},${svgH - 14})`);
-        const legScale = d3.scaleLinear().domain([0, maxAmt]).range([0, legW]);
+        d3.scaleLinear().domain([0, maxAmt]).range([0, legW]);
         const defs = svg.append('defs');
         const grad = defs.append('linearGradient').attr('id', 'heat-grad');
         grad.append('stop').attr('offset', '0%').attr('stop-color', '#e2e8f0');

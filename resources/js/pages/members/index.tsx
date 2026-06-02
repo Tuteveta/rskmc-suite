@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function MembersIndex({ members }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const role = auth.user?.role;
     const canDelete = ['admin', 'administrator'].includes(role);
 

@@ -7,7 +7,7 @@ interface Record { id: number; first_name: string; last_name: string; date_of_de
 interface Props { records: { data: Record[]; links: { url: string|null; label: string; active: boolean }[] }; }
 
 export default function FuneralRecordsIndex({ records }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const canDelete = ['admin', 'administrator'].includes(auth.user?.role);
     const destroy = (id: number) => { if (confirm('Delete this record?')) router.delete(route('funeral-records.destroy', id)); };
 

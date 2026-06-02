@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 interface Member { id: number; first_name: string; last_name: string; member_number: string; }
 interface Record { id: number; husband_member_id: number|null; wife_member_id: number|null; husband_first_name: string; husband_last_name: string; wife_first_name: string; wife_last_name: string; date_of_marriage: string; place_of_marriage: string|null; officiant: string; witnesses: string|null; license_number: string|null; notes: string|null; }
 
-export default function MarriageRecordEdit({ record, members }: { record: Record; members: Member[] }) {
+export default function MarriageRecordEdit({ record }: { record: Record; members?: Member[] }) {
     const { data, setData, put, processing } = useForm({
         husband_member_id: record.husband_member_id ? String(record.husband_member_id) : '',
         wife_member_id: record.wife_member_id ? String(record.wife_member_id) : '',

@@ -87,20 +87,22 @@ export default function BarRace({ data }: { data: RaceFrame[] }) {
                 ? `PGK ${d.value.toLocaleString('en-PG', { maximumFractionDigits: 0 })}`
                 : '');
 
+        type AxisSelection = d3.Selection<SVGGElement, unknown, null, undefined>;
+
         // Y axis
         svg.select<SVGGElement>('.y-axis')
             .transition().duration(dur)
-            .call(d3.axisLeft(y).tickSize(0) as any)
-            .call((gg: any) => gg.select('.domain').remove())
+            .call(d3.axisLeft(y).tickSize(0) as never)
+            .call((gg: AxisSelection) => gg.select('.domain').remove())
             .selectAll('text')
             .attr('font-size', 10).attr('fill', '#6b7280');
 
         // X axis
         svg.select<SVGGElement>('.x-axis')
             .transition().duration(dur)
-            .call(d3.axisBottom(x).ticks(5).tickFormat((v: any) =>
-                v >= 1000 ? `K${(v / 1000).toFixed(0)}k` : `${v}`) as any)
-            .call((gg: any) => gg.select('.domain').remove())
+            .call(d3.axisBottom(x).ticks(5).tickFormat((v: d3.NumberValue) =>
+                Number(v) >= 1000 ? `K${(Number(v) / 1000).toFixed(0)}k` : `${Number(v)}`) as never)
+            .call((gg: AxisSelection) => gg.select('.domain').remove())
             .selectAll('text').attr('font-size', 9).attr('fill', '#9ca3af');
     }, [frame, data]); // eslint-disable-line react-hooks/exhaustive-deps
 

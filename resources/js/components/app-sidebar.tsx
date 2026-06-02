@@ -4,7 +4,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { type SharedData } from '@/types';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Droplets, LayoutGrid, Package, Users, DollarSign, Heart, Cross, ClipboardList, ShieldCheck, HardDrive } from 'lucide-react';
+import { BookOpen, Droplets, LayoutGrid, Package, Users, DollarSign, Heart, Cross, ClipboardList, HardDrive } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -34,7 +34,7 @@ const adminNavItems: NavItem[] = [
 
 export function AppSidebar() {
     const { auth } = usePage<SharedData>().props;
-    const role = (auth.user as any)?.role as string;
+    const role = String(auth.user?.role ?? '');
 
     const canAccessModules = ['admin', 'administrator', 'data_entry_officer'].includes(role);
     const isAdmin = ['admin', 'administrator'].includes(role);

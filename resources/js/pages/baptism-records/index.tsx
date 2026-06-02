@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function BaptismRecordsIndex({ records }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const canDelete = ['admin', 'administrator'].includes(auth.user?.role);
 
     const destroy = (id: number) => {

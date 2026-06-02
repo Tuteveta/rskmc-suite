@@ -7,7 +7,7 @@ interface Record { id: number; husband_first_name: string; husband_last_name: st
 interface Props { records: { data: Record[]; links: { url: string | null; label: string; active: boolean }[] }; }
 
 export default function MarriageRecordsIndex({ records }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const canDelete = ['admin', 'administrator'].includes(auth.user?.role);
     const destroy = (id: number) => { if (confirm('Delete this record?')) router.delete(route('marriage-records.destroy', id)); };
 

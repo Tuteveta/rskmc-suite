@@ -30,7 +30,7 @@ export default function AgePyramid({ data }: { data: AgeGroup[] }) {
         const y = d3.scaleBand().domain(data.map(d => d.age_group)).range([0, h]).padding(0.2);
 
         // Gridlines
-        for (let tick of x.ticks(4)) {
+        for (const tick of x.ticks(4)) {
             g.append('line')
                 .attr('x1', x(tick)).attr('x2', x(tick))
                 .attr('y1', 0).attr('y2', h)

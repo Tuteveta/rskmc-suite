@@ -13,7 +13,7 @@ const typeColor: Record<string, string> = {
 };
 
 export default function MaintenanceIndex({ asset, logs, types }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const canDelete = ['admin', 'administrator'].includes(auth.user?.role);
     const destroy = (logId: number) => { if (confirm('Delete this log?')) router.delete(route('assets.maintenance.destroy', { asset: asset.id, log: logId })); };
 

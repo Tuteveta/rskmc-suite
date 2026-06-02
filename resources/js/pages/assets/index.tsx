@@ -23,7 +23,7 @@ const statusColor: Record<string, string> = {
 };
 
 export default function AssetsIndex({ assets, categories }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const canDelete = ['admin', 'administrator'].includes(auth.user?.role);
 
     const destroy = (id: number) => {

@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import {
@@ -8,7 +8,7 @@ import {
     Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import {
-    Users, Package, Droplets, Heart, Cross,
+    Users, Droplets, Heart, Cross,
     DollarSign, TrendingUp, TrendingDown, Minus,
     UserCheck, Clock, UserPlus, Trophy, Wrench, AlertTriangle,
 } from 'lucide-react';
@@ -54,8 +54,8 @@ function TrendBadge({ v, invert = false }: { v: Variance; invert?: boolean }) {
 }
 
 // ── Variance card ────────────────────────────────────────────────────────────
-function VCard({ label, value, variance, icon: Icon, color, isCurrency = false, invert = false }: {
-    label: string; value: number; variance: Variance;
+function VCard({ label, variance, icon: Icon, color, isCurrency = false, invert = false }: {
+    label: string; value?: number; variance: Variance;
     icon: React.ElementType; color: string; isCurrency?: boolean; invert?: boolean;
 }) {
     const fmt = (n: number) => isCurrency
@@ -96,13 +96,16 @@ function ChartCard({ title, children }: { title: string; children: React.ReactNo
     );
 }
 
+interface TooltipPayloadItem { dataKey: string; name: string; value: number; color: string; }
+interface TooltipProps { active?: boolean; payload?: TooltipPayloadItem[]; label?: string; }
+
 // ── Custom tooltip ───────────────────────────────────────────────────────────
-function CurrencyTooltip({ active, payload, label }: any) {
+function CurrencyTooltip({ active, payload, label }: TooltipProps) {
     if (!active || !payload?.length) return null;
     return (
         <div className="glass rounded-lg p-3 text-xs">
             <p className="font-semibold mb-1">{label}</p>
-            {payload.map((p: any) => (
+            {payload.map((p) => (
                 <p key={p.dataKey} style={{ color: p.color }}>
                     {p.name}: PGK {Number(p.value).toLocaleString('en-PG', { minimumFractionDigits: 2 })}
                 </p>
@@ -150,13 +153,13 @@ function InsightCard({ icon: Icon, iconBg, label, value, sub }: {
 export default function Dashboard({ summary, variances, charts, member_analytics, financial_analytics, asset_monitoring }: {
     summary: Record<string, number>;
     variances: Record<Period, PeriodVariances>;
-    charts: Record<string, any[]>;
+    charts: Record<string, Record<string, unknown>[]>;
     member_analytics: MemberAnalytics;
     financial_analytics: FinancialAnalytics;
     asset_monitoring: AssetMonitoring;
 }) {
-    const { auth } = usePage<any>().props;
-    const role = auth.user?.role_label ?? auth.user?.role ?? '';
+    const { auth } = usePage<SharedData>().props;
+    const role = String(auth.user?.role_label ?? auth.user?.role ?? '');
     const [period, setPeriod] = useState<Period>('month');
     const v = variances[period];
 
@@ -293,8 +296,8 @@ export default function Dashboard({ summary, variances, charts, member_analytics
                         <ResponsiveContainer width="100%" height={200}>
                             <PieChart>
                                 <Pie data={charts.giving_by_type} dataKey="total" nameKey="type" cx="50%" cy="50%" outerRadius={75} label={({ type, percent }) => `${type} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
-                                    {charts.giving_by_type.map((entry: any, i: number) => (
-                                        <Cell key={i} fill={PIE_COLORS[entry.type] ?? CHART_COLORS[i % CHART_COLORS.length]} />
+                                    {charts.giving_by_type.map((entry, i) => (
+                                        <Cell key={i} fill={PIE_COLORS[entry.type as string] ?? CHART_COLORS[i % CHART_COLORS.length]} />
                                     ))}
                                 </Pie>
                                 <Tooltip formatter={(v: number) => `PGK ${v.toLocaleString('en-PG', { minimumFractionDigits: 2 })}`} />

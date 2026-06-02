@@ -1,6 +1,7 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
+import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 
 function timeGreeting(): string {
@@ -11,7 +12,7 @@ function timeGreeting(): string {
 }
 
 export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: BreadcrumbItemType[] }) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const firstName = auth?.user?.name?.split(' ')[0] ?? '';
 
     return (
